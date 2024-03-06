@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
+import 'package:storeapp_flutter/utils/global_actions.dart';
 import 'package:storeapp_flutter/widgets/user_list_tile_widget.dart';
 
 class UserPage extends StatefulWidget {
@@ -165,6 +166,9 @@ class _UserPageState extends State<UserPage> {
                 trailingIcon: themeState.getDarkTheme
                     ? Icon(IconlyBold.arrow_right, color: color)
                     : Icon(IconlyLight.arrow_right, color: color),
+                function: () {
+                  GlobalActions().showLogout(context: context);
+                },
               ),
             ],
           ),

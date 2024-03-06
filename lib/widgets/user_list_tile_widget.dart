@@ -8,13 +8,14 @@ class UserListTileWidget extends StatelessWidget {
   String? subtitulo;
   Icon leadingIcon;
   Icon trailingIcon;
+  Function? function;
 
-  UserListTileWidget({
-    required this.titulo,
-    required this.leadingIcon,
-    required this.trailingIcon,
-    this.subtitulo,
-  });
+  UserListTileWidget(
+      {required this.titulo,
+      required this.leadingIcon,
+      required this.trailingIcon,
+      this.subtitulo,
+      this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,9 @@ class UserListTileWidget extends StatelessWidget {
       ),
       leading: leadingIcon,
       trailing: trailingIcon,
-      onTap: () {},
+      onTap: () {
+        function!();
+      },
     );
   }
 }
