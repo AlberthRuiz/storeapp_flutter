@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
+// ignore: must_be_immutable
 class CategoriesWidget extends StatelessWidget {
   String texto, image;
   final Color passedcolor;

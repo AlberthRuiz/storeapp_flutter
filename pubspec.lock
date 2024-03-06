@@ -190,14 +190,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.2"
-  flutter_stripe:
-    dependency: "direct main"
-    description:
-      name: flutter_stripe
-      sha256: e7c493669d672e26107bd67dbc0cc6db5d88267a6431697b2330b2815762d862
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -216,14 +208,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.2.4"
-  freezed_annotation:
-    dependency: transitive
-    description:
-      name: freezed_annotation
-      sha256: c3fd9336eb55a38cc1bbd79ab17573113a8deccd0ecbbf926cca3c62803b5c2d
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
   google_maps:
     dependency: transitive
     description:
@@ -320,14 +304,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.8.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -621,30 +597,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  stripe_android:
-    dependency: transitive
-    description:
-      name: stripe_android
-      sha256: af16403612f558351b4b4f76b68f24481405e00e1831ecb054971179b574c07b
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.0"
-  stripe_ios:
-    dependency: transitive
-    description:
-      name: stripe_ios
-      sha256: d0addc9741ee325cc81bf290f931d90dd29300c6ec226bf7f70700b1125ffc3e
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.0"
-  stripe_platform_interface:
-    dependency: transitive
-    description:
-      name: stripe_platform_interface
-      sha256: "03ff24e7e77f5d73895b511f7f65f85b60488fdd66a62d291b670eae681cd9e0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.0+1"
   synchronized:
     dependency: transitive
     description:

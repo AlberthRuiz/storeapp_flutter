@@ -9,12 +9,12 @@ import 'package:storeapp_flutter/pages/user_page.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
 
 // ignore: must_be_immutable
-class BottomBarWidget extends StatefulWidget {
+class IntiPage extends StatefulWidget {
   @override
-  State<BottomBarWidget> createState() => _BottonBarWidgetState();
+  State<IntiPage> createState() => _BottonBarWidgetState();
 }
 
-class _BottonBarWidgetState extends State<BottomBarWidget> {
+class _BottonBarWidgetState extends State<IntiPage> {
   List _pages = [
     HomePage(),
     CategoriesPage(),

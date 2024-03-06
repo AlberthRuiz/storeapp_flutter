@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storeapp_flutter/pages/home_page.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
-import 'package:storeapp_flutter/widgets/bottom_bar_widget.dart';
+import 'package:storeapp_flutter/pages/init_page.dart';
 
 import 'consts/theme_data.dart';
 
@@ -45,7 +44,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: "Shop APP",
             theme: Styles.themeData(themeProvider.getDarkTheme, context),
-            home: BottomBarWidget());
+            home: IntiPage());
       }),
     );
   }
