@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/on_sale_widget.dart';
-import 'package:storeapp_flutter/widgets/product_items_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class OnSalePage extends StatelessWidget {
@@ -36,6 +35,7 @@ class OnSalePage extends StatelessWidget {
         ),
       ),
       body: _isEmpty
+          // ignore: dead_code
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
