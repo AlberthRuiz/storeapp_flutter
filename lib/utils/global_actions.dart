@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class GlobalActions {
-  static navigateTo({required BuildContext ctx, required String routeName}) {
-    Navigator.pushNamed(ctx, routeName);
-  }
-
   Future<void> showLogout({required BuildContext context}) async {
     await showDialog(
         context: context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storeapp_flutter/pages/on_sale_page.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
 import 'package:storeapp_flutter/pages/init_page.dart';
 
@@ -41,10 +42,14 @@ class _MyAppState extends State<MyApp> {
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: "Shop APP",
-            theme: Styles.themeData(themeProvider.getDarkTheme, context),
-            home: IntiPage());
+          debugShowCheckedModeBanner: false,
+          title: "Shop APP",
+          theme: Styles.themeData(themeProvider.getDarkTheme, context),
+          home: IntiPage(),
+          routes: {
+            OnSalePage.routName: (ctx) => const OnSalePage(),
+          },
+        );
       }),
     );
   }

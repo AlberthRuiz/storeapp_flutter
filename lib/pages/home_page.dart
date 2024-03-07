@@ -1,8 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconly/iconly.dart';
+import 'package:storeapp_flutter/pages/on_sale_page.dart';
+import 'package:storeapp_flutter/pages/product_page.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/on_sale_widget.dart';
 import 'package:storeapp_flutter/widgets/product_items_widget.dart';
@@ -53,7 +53,10 @@ class _HomePageState extends State<HomePage> {
               height: 8,
             ),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => OnSalePage()));
+                },
                 child: TextWidget(
                   text: "Ver todos",
                   maxLines: 1,
@@ -112,7 +115,12 @@ class _HomePageState extends State<HomePage> {
                     isTitle: true,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductsPage()));
+                    },
                     child: TextWidget(
                       text: "Ver Todos",
                       color: Colors.blueAccent,
@@ -127,6 +135,7 @@ class _HomePageState extends State<HomePage> {
             GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
               crossAxisCount: 2,
               childAspectRatio:
                   util.getScreenSize.width / (util.getScreenSize.height * 0.55),

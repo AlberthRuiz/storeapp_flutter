@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
+import 'package:storeapp_flutter/widgets/heart_button_widget.dart';
 import 'package:storeapp_flutter/widgets/price_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
@@ -63,21 +64,15 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                             SizedBox(
                               width: 5,
                             ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Icon(
-                                IconlyLight.heart,
-                                size: 22,
-                                color: utils.color,
-                              ),
-                            ),
+                            HearButtonWidget(),
                           ],
                         ),
                       ],
                     ),
                   ],
                 ),
-                PriceWidget(),
+                const PriceWidget(
+                    price: 12, salePrice: 13, textPrice: "1", isOnSale: true),
                 const SizedBox(
                   height: 5,
                 ),
