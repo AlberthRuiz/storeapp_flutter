@@ -2,8 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:storeapp_flutter/pages/orders_page.dart';
+import 'package:storeapp_flutter/pages/wishlist_page.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
 import 'package:storeapp_flutter/utils/global_actions.dart';
+import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/user_list_tile_widget.dart';
 
 class UserPage extends StatefulWidget {
@@ -24,6 +27,7 @@ class _UserPageState extends State<UserPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: Utils(context).getScreenSize.height *0.10,),
               ListTile(
                 leading: Container(
                   decoration: BoxDecoration(
@@ -65,14 +69,12 @@ class _UserPageState extends State<UserPage> {
                   style: TextStyle(color: color),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+           
               Divider(
                 thickness: 2,
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               SwitchListTile(
                 title: Text(
@@ -117,6 +119,13 @@ class _UserPageState extends State<UserPage> {
                 trailingIcon: themeState.getDarkTheme
                     ? Icon(IconlyBold.arrow_right, color: color)
                     : Icon(IconlyLight.arrow_right, color: color),
+                function: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WishlistPage(),
+                      ));
+                },
               ),
               UserListTileWidget(
                 titulo: "Pedidos",
@@ -129,6 +138,13 @@ class _UserPageState extends State<UserPage> {
                 trailingIcon: themeState.getDarkTheme
                     ? Icon(IconlyBold.arrow_right, color: color)
                     : Icon(IconlyLight.arrow_right, color: color),
+                function: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OrdersPage(),
+                      ));
+                },
               ),
               UserListTileWidget(
                 titulo: "Vistos",
@@ -167,7 +183,7 @@ class _UserPageState extends State<UserPage> {
                     ? Icon(IconlyBold.arrow_right, color: color)
                     : Icon(IconlyLight.arrow_right, color: color),
                 function: () {
-                  GlobalActions().showLogout(context: context);
+                  GlobalActions.showLogout(context: context);
                 },
               ),
             ],

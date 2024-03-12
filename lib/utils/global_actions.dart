@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class GlobalActions {
-  Future<void> showLogout({required BuildContext context}) async {
+  static Future<void> showLogout({required BuildContext context}) async {
     await showDialog(
         context: context,
         builder: (context) {
@@ -65,7 +65,7 @@ class GlobalActions {
           return AlertDialog(
             title: Row(children: [
               Image.asset(
-                'assets/images/logout.png',
+                'assets/images/warning.png',
                 height: 20,
                 width: 20,
                 fit: BoxFit.fill,
@@ -117,7 +117,7 @@ class GlobalActions {
           return AlertDialog(
             title: Row(children: [
               Image.asset(
-                'assets/images/warning-sign.png',
+                'assets/images/warning.png',
                 height: 20,
                 width: 20,
                 fit: BoxFit.fill,

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badge;
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -7,6 +8,7 @@ import 'package:storeapp_flutter/pages/categories_page.dart';
 import 'package:storeapp_flutter/pages/home_page.dart';
 import 'package:storeapp_flutter/pages/user_page.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
+import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 // ignore: must_be_immutable
 class IntiPage extends StatefulWidget {
@@ -42,7 +44,22 @@ class _BottonBarWidgetState extends State<IntiPage> {
         items: [
           Icon(_activeIndex == 0 ? IconlyBold.home : IconlyLight.home),
           Icon(_activeIndex == 1 ? IconlyBold.category : IconlyLight.category),
-          Icon(_activeIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
+          badge.Badge(
+            badgeAnimation: const badge.BadgeAnimation.slide(),
+            badgeStyle: badge.BadgeStyle(
+              shape: badge.BadgeShape.circle,
+              badgeColor: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            position: badge.BadgePosition.topEnd(
+              top: -7,
+              end: -7,
+            ),
+            badgeContent: FittedBox(
+                child:
+                    TextWidget(text: "1", color: Colors.white, textSize: 15)),
+            child: Icon(_activeIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
+          ),
           Icon(_activeIndex == 3 ? IconlyBold.user_2 : IconlyLight.user),
         ],
       ),

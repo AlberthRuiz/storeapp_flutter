@@ -1,7 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:storeapp_flutter/pages/product_details_page.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/heart_button_widget.dart';
 import 'package:storeapp_flutter/widgets/price_widget.dart';
@@ -30,124 +30,131 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    final Color color = Utils(context).color;
+    Size size = Utils(context).getScreenSize;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: Material(
-        clipBehavior: Clip.none,
-        borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12),
+        color: const Color(0xffB7DFF5).withOpacity(0.2),
         child: InkWell(
-          onTap: () {},
-          borderRadius: BorderRadius.circular(10),
-          child: Column(
-            children: [
-              FancyShimmerImage(
-                imageUrl:
-                    "https://media.istockphoto.com/id/1368847822/es/foto/fruta-naranja-realista-sobre-fondo-blanco-camino-de-recorte.jpg?s=2048x2048&w=is&k=20&c=w-BiYptWAfu35zLHi7V03u3ZYjun0u6ebpbVM6FEE9c=",
-                width: utils.getScreenSize.width * 0.21,
-                height: utils.getScreenSize.height * 0.10,
-                boxFit: BoxFit.fill,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProductDetailsPage()));
+          },
+          borderRadius: BorderRadius.circular(12),
+          child: Column(children: [
+            FancyShimmerImage(
+              imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+              height: size.width * 0.2,
+              width: size.width * 0.2,
+              boxFit: BoxFit.fill,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextWidget(
+                    text: 'Title',
+                    color: color,
+                    textSize: 18,
+                    isTitle: true,
+                  ),
+                  const HearButtonWidget(),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextWidget(
-                      text: "Naranja",
-                      color: utils.color,
-                      textSize: 20,
-                      isTitle: true,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4, left: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: PriceWidget(
+                      salePrice: 2.99,
+                      price: 5.9,
+                      textPrice: _cantidadControlller.text,
+                      isOnSale: true,
                     ),
-                    HearButtonWidget(),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    PriceWidget(
-                        price: 12,
-                        salePrice: 13,
-                        textPrice: _cantidadControlller.text,
-                        isOnSale: true),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Flexible(
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Flexible(
-                              child: TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                if (value.isEmpty) {
-                                  value = "1";
-                                }
-                                _cantidadControlller.text = value;
-                              });
-                            },
-                            controller: _cantidadControlller,
-                            key: const ValueKey("10"),
-                            style: TextStyle(color: utils.color, fontSize: 16),
-                            keyboardType: TextInputType.number,
-                            maxLines: 1,
-                            enabled: true,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp("[0-9.]"),
-                              ),
-                            ],
-                          )),
-                          FittedBox(
+                  ),
+                  const SizedBox(
+                    width: 3,
+                  ),
+                  Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: FittedBox(
                             child: TextWidget(
-                              text: "KG",
-                              color: utils.color,
+                              text: 'KG',
+                              color: color,
                               textSize: 16,
                               isTitle: true,
                             ),
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Flexible(
+                            flex: 2,
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              controller: _cantidadControlller,
+                              key: const ValueKey('10'),
+                              style: TextStyle(color: color),
+                              keyboardType: TextInputType.number,
+                              maxLines: 1,
+                              enabled: true,
+                              onChanged: (valueee) {
+                                if (valueee == "") valueee = "1";
+                                _cantidadControlller.text = valueee;
+                                setState(() {});
+                              },
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp('[0-9.]'),
+                                ),
+                              ],
+                            ))
+                      ],
+                    ),
+                  )
+                ],
               ),
-              Spacer(),
-              SizedBox(
-                width: utils.getScreenSize.width,
+            ),
+            Flexible(
+              child: SizedBox(
+                width: Utils(context).getScreenSize.width,
                 child: TextButton(
                   onPressed: () {},
                   child: TextWidget(
-                    text: "Agregar +",
+                    text: 'Agregar',
                     maxLines: 1,
-                    color: utils.color,
-                    textSize: 18,
+                    color: color,
+                    textSize: 16,
                   ),
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Theme.of(context).cardColor),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(12),
-                            bottomRight: Radius.circular(12)),
-                      ),
-                    ),
-                  ),
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).cardColor),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(12.0),
+                            bottomRight: Radius.circular(12.0),
+                          ),
+                        ),
+                      )),
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ]),
         ),
       ),
     );

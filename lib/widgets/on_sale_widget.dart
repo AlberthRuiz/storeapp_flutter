@@ -16,27 +16,27 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
   Widget build(BuildContext context) {
     Utils utils = Utils(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: Material(
-        color: Theme.of(context).cardColor.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(12),
+        color: const Color(0xffF8A44C).withOpacity(0.2),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {},
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
+                Row(                  
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FancyShimmerImage(
-                      imageUrl:
-                          "https://media.istockphoto.com/id/1368847822/es/foto/fruta-naranja-realista-sobre-fondo-blanco-camino-de-recorte.jpg?s=2048x2048&w=is&k=20&c=w-BiYptWAfu35zLHi7V03u3ZYjun0u6ebpbVM6FEE9c=",
+                     imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
                       width: utils.getScreenSize.width * 0.20,
                       height: utils.getScreenSize.height * 0.10,
-                      boxFit: BoxFit.fitWidth,
+                      boxFit: BoxFit.fill,
                     ),
                     const SizedBox(
                       width: 6,
@@ -46,7 +46,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                         TextWidget(
                           text: "1KG",
                           color: utils.color,
-                          textSize: 20,
+                          textSize: 18,
                           isTitle: true,
                         ),
                         const SizedBox(
@@ -72,19 +72,14 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                   ],
                 ),
                 const PriceWidget(
-                    price: 12, salePrice: 13, textPrice: "1", isOnSale: true),
-                const SizedBox(
-                  height: 5,
-                ),
+                    price: 12, salePrice: 13, textPrice: "1", isOnSale: true),               
                 TextWidget(
                   text: "Titulo Producto",
                   color: utils.color,
                   textSize: 16,
                   isTitle: true,
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+              
               ],
             ),
           ),

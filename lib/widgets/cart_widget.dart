@@ -52,11 +52,12 @@ class _CartWidgetxState extends State<CartWidget> {
                           "https://media.istockphoto.com/id/1368847822/es/foto/fruta-naranja-realista-sobre-fondo-blanco-camino-de-recorte.jpg?s=2048x2048&w=is&k=20&c=w-BiYptWAfu35zLHi7V03u3ZYjun0u6ebpbVM6FEE9c=",
                       width: utils.getScreenSize.width * 0.21,
                       height: utils.getScreenSize.height * 0.10,
-                      boxFit: BoxFit.fill,
+                      boxFit: BoxFit.contain,
                     ),
                   ),
+                  
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextWidget(
                         text: "Product",
@@ -72,14 +73,27 @@ class _CartWidgetxState extends State<CartWidget> {
                         child: Row(
                           children: [
                             _cantidadController(
-                                f: () {},
+                                f: () {
+                                  setState(() {
+                                    _cantitadTextController.text = int.parse(
+                                                _cantitadTextController.text) >
+                                            1
+                                        ? (int.parse(_cantitadTextController
+                                                    .text) -
+                                                1)
+                                            .toString()
+                                        : 1.toString();
+                                  });
+                                },
                                 icono: CupertinoIcons.minus,
                                 color: Colors.red),
                             Flexible(
                                 flex: 2,
                                 child: TextFormField(
+                                  
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
+                                    color:  utils.color,
                                     fontSize: 12,
                                   ),
                                   controller: _cantitadTextController,
@@ -104,7 +118,14 @@ class _CartWidgetxState extends State<CartWidget> {
                                   },
                                 )),
                             _cantidadController(
-                                f: () {},
+                                f: () {
+                                  setState(() {
+                                    _cantitadTextController.text = (int.parse(
+                                                _cantitadTextController.text) +
+                                            1)
+                                        .toString();
+                                  });
+                                },
                                 icono: CupertinoIcons.plus,
                                 color: Colors.green),
                           ],

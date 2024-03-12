@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
+import 'package:storeapp_flutter/widgets/back_widget.dart';
 import 'package:storeapp_flutter/widgets/on_sale_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
@@ -15,16 +15,7 @@ class OnSalePage extends StatelessWidget {
     final util = Utils(context);
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          borderRadius: BorderRadius.circular(23),
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            IconlyLight.arrow_left_2,
-            color: util.color,
-          ),
-        ),
+        leading:  BackWidget(),
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: TextWidget(

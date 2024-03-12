@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:storeapp_flutter/pages/on_sale_page.dart';
+import 'package:storeapp_flutter/pages/login_page.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
-import 'package:storeapp_flutter/pages/init_page.dart';
-
 import 'consts/theme_data.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -45,10 +44,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: "Shop APP",
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: IntiPage(),
-          routes: {
-            OnSalePage.routName: (ctx) => const OnSalePage(),
-          },
+          home: LoginPage(),
         );
       }),
     );

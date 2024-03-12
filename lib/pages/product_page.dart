@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
+import 'package:storeapp_flutter/widgets/back_widget.dart';
 import 'package:storeapp_flutter/widgets/product_items_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
@@ -27,16 +27,7 @@ class _ProductsPageState extends State<ProductsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: InkWell(
-          borderRadius: BorderRadius.circular(23),
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            IconlyLight.arrow_left_2,
-            color: util.color,
-          ),
-        ),
+        leading: BackWidget(),
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: TextWidget(
@@ -100,7 +91,7 @@ class _ProductsPageState extends State<ProductsPage> {
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               childAspectRatio:
-                  util.getScreenSize.width / (util.getScreenSize.height * 0.55),
+                  util.getScreenSize.width / (util.getScreenSize.height * 0.64),
               children: List.generate(
                 16,
                 (index) {

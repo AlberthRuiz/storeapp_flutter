@@ -16,14 +16,17 @@ class PriceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color color = Utils(context).color;
     double userPrice = isOnSale ? salePrice : price;
     return FittedBox(
-      child: Row(children: [
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+      children: [
         TextWidget(
-          text: "S/. ${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}",
-          color: const Color.fromARGB(255, 62, 148, 64),
-          textSize: 15,
-          isTitle: true,
+          text: '\$${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}',
+          color: Colors.green,
+          textSize: 16,
         ),
         const SizedBox(
           width: 5,
@@ -31,15 +34,15 @@ class PriceWidget extends StatelessWidget {
         Visibility(
           visible: isOnSale ? true : false,
           child: Text(
-            "S/. ${(price * int.parse(textPrice)).toStringAsFixed(2)}",
+            '\$${(price * int.parse(textPrice)).toStringAsFixed(2)}',
             style: TextStyle(
-              fontSize: 12,
-              color: Utils(context).color,
+              fontSize: 14,
+              color: color,
               decoration: TextDecoration.lineThrough,
             ),
           ),
-        )
-      ]),
-    );
+        ),
+      ],
+    ));
   }
 }
