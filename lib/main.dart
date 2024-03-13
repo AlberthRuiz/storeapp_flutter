@@ -1,11 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storeapp_flutter/firebase_options.dart';
 import 'package:storeapp_flutter/pages/login_page.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
 import 'consts/theme_data.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 

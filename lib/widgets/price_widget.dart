@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
@@ -20,8 +19,8 @@ class PriceWidget extends StatelessWidget {
     double userPrice = isOnSale ? salePrice : price;
     return FittedBox(
         child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextWidget(
           text: '\$${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}',
