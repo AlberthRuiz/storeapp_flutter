@@ -4,13 +4,9 @@ import 'package:storeapp_flutter/models/products_model.dart';
 
 class ProductsProvider extends ChangeNotifier {
   static List<ProductModel> _productsList = [];
-  ProductModel? _product;
+
   List<ProductModel> get getProducts {
     return _productsList;
-  }
-
-  ProductModel? get getProduct {
-    return _product;
   }
 
   List<ProductModel> get getOnSaleProducts {

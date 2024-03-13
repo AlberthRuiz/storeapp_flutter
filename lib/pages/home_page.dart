@@ -1,9 +1,12 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/consts/constants.dart';
+import 'package:storeapp_flutter/models/products_model.dart';
 import 'package:storeapp_flutter/pages/on_sale_page.dart';
 import 'package:storeapp_flutter/pages/product_page.dart';
+import 'package:storeapp_flutter/provider/products_provider.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/on_sale_widget.dart';
 import 'package:storeapp_flutter/widgets/product_items_widget.dart';
@@ -20,6 +23,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final util = Utils(context);
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allProducts = productProviders.getProducts;
+    List<ProductModel> productsOnSale = productProviders.getOnSaleProducts;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -133,10 +139,8 @@ class _HomePageState extends State<HomePage> {
               crossAxisCount: 2,
               childAspectRatio:
                   util.getScreenSize.width / (util.getScreenSize.height * 0.64),
-              children: List.generate(4, (index) {
-                return ProductItemWidget(
-                    imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
-                    title: 'producto');
+              children: List.generate(allProducts.length, (index) {
+                return ProductItemWidget(productModel: allProducts[index]);
               }),
             ),
           ],

@@ -8,7 +8,6 @@ import 'package:storeapp_flutter/models/products_model.dart';
 import 'package:storeapp_flutter/pages/product_details_page.dart';
 import 'package:storeapp_flutter/provider/cart_provider.dart';
 import 'package:storeapp_flutter/provider/products_provider.dart';
-import 'package:storeapp_flutter/provider/products_provider.dart';
 import 'package:storeapp_flutter/provider/wishlist_provider.dart';
 import 'package:storeapp_flutter/utils/global_actions.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
@@ -17,9 +16,9 @@ import 'package:storeapp_flutter/widgets/price_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class ProductItemWidget extends StatefulWidget {
-  const ProductItemWidget(
-      {super.key, required this.imageUrl, required this.title});
-  final String imageUrl, title;
+  ProductItemWidget({required this.productModel});
+  ProductModel productModel;
+
   @override
   State<ProductItemWidget> createState() => _ProductItemWidgetState();
 }
@@ -42,8 +41,8 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
-    final productsProvider = Provider.of<ProductsProvider>(context);
-    final productModel = productsProvider.getProducts[0];
+    // final productsProvider = Provider.of<ProductsProvider>(context);
+    final productModel = widget.productModel;
     final cartProvider = Provider.of<CartProvider>(context);
     bool? isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
@@ -186,10 +185,10 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                       ),
                     )),
                 child: TextWidget(
-                  text: isInCart ? 'Agregado' : 'Agregar a Carro',
+                  text: isInCart ? 'Agregado' : 'Agregar',
                   maxLines: 1,
                   color: color,
-                  textSize: 20,
+                  textSize: 18,
                 ),
               ),
             )
