@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,3 +35,7 @@ class Consts {
     "https://media.istockphoto.com/id/1034754206/es/foto/ahorro-descuento-cup%C3%B3n-vale-con-calculadora-cupones-son-maquetas.jpg?s=612x612&w=is&k=20&c=2A7N7r02G4sHZcwK4CEy3DGYeWKRkRuXuz8H0TPn3OM=",
   ];
 }
+
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+final User? user = firebaseAuth.currentUser;
+final uid = user!.uid;

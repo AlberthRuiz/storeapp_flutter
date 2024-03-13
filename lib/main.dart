@@ -2,8 +2,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/firebase_options.dart';
-import 'package:storeapp_flutter/pages/login_page.dart';
+import 'package:storeapp_flutter/pages/fetch_page.dart';
+import 'package:storeapp_flutter/pages/init_page.dart';
+import 'package:storeapp_flutter/pages/on_sale_page.dart';
+import 'package:storeapp_flutter/pages/orders_page.dart';
+import 'package:storeapp_flutter/pages/product_details_page.dart';
+import 'package:storeapp_flutter/pages/product_page.dart';
+import 'package:storeapp_flutter/pages/wishlist_page.dart';
+import 'package:storeapp_flutter/provider/cart_provider.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
+import 'package:storeapp_flutter/provider/orders_provider.dart';
+import 'package:storeapp_flutter/provider/products_provider.dart';
+import 'package:storeapp_flutter/provider/viewed_prod_provider.dart';
+import 'package:storeapp_flutter/provider/wishlist_provider.dart';
 import 'consts/theme_data.dart';
 
 void main() async {
@@ -35,23 +46,62 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  final Future<FirebaseApp> _firebaseInitialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) {
-          return themeChangeProvider;
-        })
-      ],
-      child:
-          Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Shop APP",
-          theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: LoginPage(),
-        );
-      }),
-    );
+    return FutureBuilder(
+        future: _firebaseInitialization,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                  body: Center(
+                child: CircularProgressIndicator(),
+              )),
+            );
+          } else if (snapshot.hasError) {
+            const MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                  body: Center(
+                child: Text('An error occured'),
+              )),
+            );
+          }
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (BuildContext context) {
+                return themeChangeProvider;
+              }),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => ProductsProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => CartProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => WishlistProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => ViewedProdProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => OrdersProvider(),
+              ),
+            ],
+            child: Consumer<DarkThemeProvider>(
+                builder: (context, themeProvider, child) {
+              return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter Demo',
+                  theme: Styles.themeData(themeProvider.getDarkTheme, context),
+                  home: FetchPage(),
+                  routes: {
+                    OnSalePage.routName: (ctx) => const OnSalePage(),
+                  });
+            }),
+          );
+        });
   }
 }

@@ -23,7 +23,7 @@ class PriceWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextWidget(
-          text: '\$${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}',
+          text: 'S/.${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}',
           color: Colors.green,
           textSize: 16,
         ),
@@ -33,7 +33,7 @@ class PriceWidget extends StatelessWidget {
         Visibility(
           visible: isOnSale ? true : false,
           child: Text(
-            '\$${(price * int.parse(textPrice)).toStringAsFixed(2)}',
+            'S/.${(price * int.parse(textPrice)).toStringAsFixed(2)}',
             style: TextStyle(
               fontSize: 14,
               color: color,

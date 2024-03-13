@@ -17,7 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     final util = Utils(context);
@@ -135,7 +134,9 @@ class _HomePageState extends State<HomePage> {
               childAspectRatio:
                   util.getScreenSize.width / (util.getScreenSize.height * 0.64),
               children: List.generate(4, (index) {
-                return ProductItemWidget();
+                return ProductItemWidget(
+                    imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+                    title: 'producto');
               }),
             ),
           ],

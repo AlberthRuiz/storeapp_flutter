@@ -1,7 +1,12 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:storeapp_flutter/consts/constants.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class GlobalActions {
   static Future<void> showLogout({required BuildContext context}) async {
@@ -144,5 +149,56 @@ class GlobalActions {
             ],
           );
         });
+  }
+
+  static Future<void> addToCart(
+      {required String productId,
+      required int quantity,
+      required BuildContext context}) async {
+    final User? user = firebaseAuth.currentUser;
+    final uid = user!.uid;
+    final cartId = const Uuid().v4();
+    try {
+      FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'userCart': FieldValue.arrayUnion([
+          {
+            'cartId': cartId,
+            'productId': productId,
+            'quantity': quantity,
+          }
+        ])
+      });
+      await Fluttertoast.showToast(
+        msg: "Item has been added to your cart",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    } catch (error) {
+      errorDialog(subtitle: error.toString(), context: context);
+    }
+  }
+
+  static Future<void> addToWishlist(
+      {required String productId, required BuildContext context}) async {
+    final User? user = firebaseAuth.currentUser;
+    final uid = user!.uid;
+    final wishlistId = const Uuid().v4();
+    try {
+      FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'userWish': FieldValue.arrayUnion([
+          {
+            'wishlistId': wishlistId,
+            'productId': productId,
+          }
+        ])
+      });
+      await Fluttertoast.showToast(
+        msg: "Item agregado a lista deseos",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    } catch (error) {
+      errorDialog(subtitle: error.toString(), context: context);
+    }
   }
 }

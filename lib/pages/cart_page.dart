@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/pages/empty_page.dart';
+import 'package:storeapp_flutter/provider/cart_provider.dart';
 import 'package:storeapp_flutter/utils/global_actions.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/cart_widget.dart';
@@ -11,53 +13,64 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final util = Utils(context);
-    bool _isEmpty = false;
-    return _isEmpty
-        // ignore: dead_code
+    final Color color = Utils(context).color;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItemsList =
+        cartProvider.getCartItems.values.toList().reversed.toList();
+    return cartItemsList.isEmpty
         ? const EmptyPage(
-            title: 'Carrito esta vacio',
-            subtitle: 'Añadir algun producto...',
-            buttonText: 'Comprar Ahora',
+            title: 'Your cart is empty',
+            subtitle: 'Add something and make me happy :)',
+            buttonText: 'Shop now',
             imagePath: 'assets/images/empty-cart.png',
-          // ignore: dead_code
-          ): Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: TextWidget(
-            text: "Mi Carrito (2)",
-            color: util.color,
-            textSize: 24,
-            isTitle: true,
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                GlobalActions.warningDialog(
-                    title: "ELiminar carrito?",
-                    subtitle: "Quieres eliminar el carro de compras?",
-                    fct: () {},
-                    context: context);
-              },
-              icon: Icon(IconlyBroken.delete),
-            )
-          ],
-        ),
-        body:
-        
-         Column(
-          children: [
-            _comprar(context: context),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return CartWidget();
-                },
-              ),
+          )
+        : Scaffold(
+            appBar: AppBar(
+                automaticallyImplyLeading: false,
+                elevation: 0,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                title: TextWidget(
+                  text: 'Cart (${cartItemsList.length})',
+                  color: color,
+                  isTitle: true,
+                  textSize: 22,
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      GlobalActions.warningDialog(
+                          title: 'Empty your cart?',
+                          subtitle: 'Are you sure?',
+                          fct: () async {
+                            await cartProvider.clearOnlineCart();
+                            cartProvider.clearLocalCart();
+                          },
+                          context: context);
+                    },
+                    icon: Icon(
+                      IconlyBroken.delete,
+                      color: color,
+                    ),
+                  ),
+                ]),
+            body: Column(
+              children: [
+                _comprar(context: context),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cartItemsList.length,
+                    itemBuilder: (ctx, index) {
+                      return ChangeNotifierProvider.value(
+                          value: cartItemsList[index],
+                          child: CartWidget(
+                            q: cartItemsList[index].quantity,
+                          ));
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ));
+          );
   }
 
   Widget _comprar({required BuildContext context}) {

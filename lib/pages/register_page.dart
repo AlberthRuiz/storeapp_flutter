@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:storeapp_flutter/consts/constants.dart';
+import 'package:storeapp_flutter/pages/init_page.dart';
 import 'package:storeapp_flutter/pages/login_page.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/auth_button_widget.dart';
@@ -23,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _addressFocusNode = FocusNode();
+
   bool _obscureText = true;
   @override
   void dispose() {
@@ -41,6 +44,41 @@ class _RegisterPageState extends State<RegisterPage> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
+      try {
+        await firebaseAuth.createUserWithEmailAndPassword(
+          email: _emailTextController.text.toLowerCase().trim(),
+          password: _passTextController.text,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(26),
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text("Registro exitoso"),
+          ),
+        );
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => IntiPage(),
+            ));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(26),
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              e.toString(),
+            ),
+          ),
+        );
+      }
     }
   }
 

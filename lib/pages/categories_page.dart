@@ -56,6 +56,7 @@ class CategoriesPage extends StatelessWidget {
         ),
       ),
       body: GridView.count(
+        padding: EdgeInsets.zero,
         crossAxisCount: 2,
         childAspectRatio: 260 / 250,
         mainAxisSpacing: 10,

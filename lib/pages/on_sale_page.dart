@@ -6,7 +6,7 @@ import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class OnSalePage extends StatelessWidget {
   static const routName = "/OnSalePage";
-
+  final int crossAxisCount = 2;
   const OnSalePage({super.key});
 
   @override
@@ -15,7 +15,7 @@ class OnSalePage extends StatelessWidget {
     final util = Utils(context);
     return Scaffold(
       appBar: AppBar(
-        leading:  BackWidget(),
+        leading: BackWidget(),
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: TextWidget(
@@ -53,7 +53,7 @@ class OnSalePage extends StatelessWidget {
               padding: EdgeInsets.zero,
               crossAxisCount: 2,
               childAspectRatio:
-                  util.getScreenSize.width / (util.getScreenSize.height * 0.55),
+                  util.getScreenSize.width / (util.getScreenSize.height * 0.45),
               children: List.generate(16, (index) {
                 return OnSaleWidget();
               }),

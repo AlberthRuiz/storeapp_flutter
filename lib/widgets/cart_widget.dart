@@ -2,171 +2,205 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:storeapp_flutter/models/cart_model.dart';
+import 'package:storeapp_flutter/pages/product_details_page.dart';
+import 'package:storeapp_flutter/provider/cart_provider.dart';
+import 'package:storeapp_flutter/provider/products_provider.dart';
+import 'package:storeapp_flutter/provider/wishlist_provider.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/heart_button_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class CartWidget extends StatefulWidget {
-  const CartWidget({super.key});
-
+  const CartWidget({Key? key, required this.q}) : super(key: key);
+  final int q;
   @override
-  State<CartWidget> createState() => _CartWidgetxState();
+  State<CartWidget> createState() => _CartWidgetState();
 }
 
-class _CartWidgetxState extends State<CartWidget> {
-  final _cantitadTextController = TextEditingController(text: "1");
+class _CartWidgetState extends State<CartWidget> {
+  final _quantityTextController = TextEditingController();
   @override
   void initState() {
+    _quantityTextController.text = widget.q.toString();
     super.initState();
   }
 
   @override
   void dispose() {
-    _cantitadTextController.dispose();
+    _quantityTextController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final utils = Utils(context);
+    final Color color = Utils(context).color;
+    Size size = Utils(context).getScreenSize;
+    final productProvider = Provider.of<ProductsProvider>(context);
+    final cartModel = Provider.of<CartModel>(context);
+    final getCurrProduct = productProvider.findProdById(cartModel.productId);
+    double usedPrice = getCurrProduct.isOnSale
+        ? getCurrProduct.salePrice
+        : getCurrProduct.price;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? isInWishlist =
+        wishlistProvider.getWishlistItems.containsKey(getCurrProduct.id);
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(id: cartModel.productId),
+          ),
+        );
+      },
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    height: utils.getScreenSize.height * 0.20,
-                    width: utils.getScreenSize.width * 0.35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: FancyShimmerImage(
-                      imageUrl:
-                          "https://media.istockphoto.com/id/1368847822/es/foto/fruta-naranja-realista-sobre-fondo-blanco-camino-de-recorte.jpg?s=2048x2048&w=is&k=20&c=w-BiYptWAfu35zLHi7V03u3ZYjun0u6ebpbVM6FEE9c=",
-                      width: utils.getScreenSize.width * 0.21,
-                      height: utils.getScreenSize.height * 0.10,
-                      boxFit: BoxFit.contain,
-                    ),
-                  ),
-                  
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      TextWidget(
-                        text: "Product",
-                        color: utils.color,
-                        textSize: 18,
-                        isTitle: true,
+            child: Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      height: size.width * 0.25,
+                      width: size.width * 0.25,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
-                      const SizedBox(
-                        height: 14,
+                      child: FancyShimmerImage(
+                        imageUrl: getCurrProduct.imageUrl,
+                        boxFit: BoxFit.fill,
                       ),
-                      SizedBox(
-                        width: utils.getScreenSize.width * 0.4,
-                        child: Row(
-                          children: [
-                            _cantidadController(
-                                f: () {
-                                  setState(() {
-                                    _cantitadTextController.text = int.parse(
-                                                _cantitadTextController.text) >
-                                            1
-                                        ? (int.parse(_cantitadTextController
-                                                    .text) -
-                                                1)
-                                            .toString()
-                                        : 1.toString();
-                                  });
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextWidget(
+                          text: getCurrProduct.title,
+                          color: color,
+                          textSize: 20,
+                          isTitle: true,
+                        ),
+                        const SizedBox(
+                          height: 16.0,
+                        ),
+                        SizedBox(
+                          width: size.width * 0.3,
+                          child: Row(
+                            children: [
+                              _quantityController(
+                                fct: () {
+                                  if (_quantityTextController.text == '1') {
+                                    return;
+                                  } else {
+                                    cartProvider.reduceQuantityByOne(
+                                        cartModel.productId);
+                                    setState(() {
+                                      _quantityTextController.text = (int.parse(
+                                                  _quantityTextController
+                                                      .text) -
+                                              1)
+                                          .toString();
+                                    });
+                                  }
                                 },
-                                icono: CupertinoIcons.minus,
-                                color: Colors.red),
-                            Flexible(
-                                flex: 2,
-                                child: TextFormField(
-                                  
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color:  utils.color,
-                                    fontSize: 12,
-                                  ),
-                                  controller: _cantitadTextController,
+                                color: Colors.red,
+                                icon: CupertinoIcons.minus,
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: TextField(
+                                  controller: _quantityTextController,
                                   keyboardType: TextInputType.number,
-                                  // maxLength: 2,
                                   maxLines: 1,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
+                                  decoration: const InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(),
                                     ),
                                   ),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                      RegExp("[0-9]"),
+                                      RegExp('[0-9]'),
                                     ),
                                   ],
-                                  onChanged: (value) {
+                                  onChanged: (v) {
                                     setState(() {
-                                      _cantitadTextController.text =
-                                          value.isNotEmpty ? value : "1";
+                                      if (v.isEmpty) {
+                                        _quantityTextController.text = '1';
+                                      } else {
+                                        return;
+                                      }
                                     });
                                   },
-                                )),
-                            _cantidadController(
-                                f: () {
+                                ),
+                              ),
+                              _quantityController(
+                                fct: () {
+                                  cartProvider.increaseQuantityByOne(
+                                      cartModel.productId);
                                   setState(() {
-                                    _cantitadTextController.text = (int.parse(
-                                                _cantitadTextController.text) +
+                                    _quantityTextController.text = (int.parse(
+                                                _quantityTextController.text) +
                                             1)
                                         .toString();
                                   });
                                 },
-                                icono: CupertinoIcons.plus,
-                                color: Colors.green),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Column(
-                      children: [
-                        const HearButtonWidget(),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Icon(
-                            CupertinoIcons.trash,
-                            color: Colors.red,
-                            size: 30,
+                                color: Colors.green,
+                                icon: CupertinoIcons.plus,
+                              )
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        TextWidget(
-                          text: "S/.12",
-                          color: utils.color,
-                          textSize: 18,
-                          maxLines: 1,
-                          isTitle: true,
-                        )
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  )
-                ],
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              await cartProvider.removeOneItem(
+                                cartId: cartModel.id,
+                                productId: cartModel.productId,
+                                quantity: cartModel.quantity,
+                              );
+                            },
+                            child: const Icon(
+                              CupertinoIcons.cart_badge_minus,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          HeartButtonWidget(
+                            productId: getCurrProduct.id,
+                            isInWishlist: isInWishlist,
+                          ),
+                          TextWidget(
+                            text:
+                                'S/.${(usedPrice * int.parse(_quantityTextController.text)).toStringAsFixed(2)}',
+                            color: color,
+                            textSize: 18,
+                            maxLines: 1,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -175,8 +209,11 @@ class _CartWidgetxState extends State<CartWidget> {
     );
   }
 
-  Widget _cantidadController(
-      {required Function f, required IconData icono, required color}) {
+  Widget _quantityController({
+    required Function fct,
+    required IconData icon,
+    required Color color,
+  }) {
     return Flexible(
       flex: 2,
       child: Padding(
@@ -187,13 +224,14 @@ class _CartWidgetxState extends State<CartWidget> {
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
-              f();
+              fct();
             },
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(6.0),
               child: Icon(
-                icono,
+                icon,
                 color: Colors.white,
+                size: 20,
               ),
             ),
           ),

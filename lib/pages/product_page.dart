@@ -95,7 +95,9 @@ class _ProductsPageState extends State<ProductsPage> {
               children: List.generate(
                 16,
                 (index) {
-                  return ProductItemWidget();
+                  return ProductItemWidget(
+                      imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+                      title: 'durazno');
                 },
               ),
             ),
