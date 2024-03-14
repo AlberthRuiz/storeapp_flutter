@@ -44,7 +44,7 @@ class _HeartButtonWidget extends State<HeartButtonWidget> {
                 productId: widget.productId, context: context);
           } else {
             await wishlistProvider.removeOneItem(
-                wishlistId:
+                listaId:
                     wishlistProvider.getWishlistItems[getCurrProduct.id]!.id,
                 productId: widget.productId);
           }
@@ -64,7 +64,7 @@ class _HeartButtonWidget extends State<HeartButtonWidget> {
           ? const Padding(
               padding: EdgeInsets.all(8.0),
               child: SizedBox(
-                  height: 15, width: 15, child: CircularProgressIndicator()),
+                  height: 10, width: 10, child: CircularProgressIndicator()),
             )
           : Icon(
               widget.isInWishlist != null && widget.isInWishlist == true

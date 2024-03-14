@@ -24,7 +24,6 @@ class _FetchScreenState extends State<FetchPage> {
       final cartProvider = Provider.of<CartProvider>(context, listen: false);
       final wishlistProvider =
           Provider.of<WishlistProvider>(context, listen: false);
-      // final orderProvider = Provider.of<OrdersProvider>(context, listen: false);
       final User? user = firebaseAuth.currentUser;
       if (user == null) {
         await productsProvider.fetchProducts();
@@ -49,7 +48,7 @@ class _FetchScreenState extends State<FetchPage> {
       body: Stack(
         children: [
           Image.asset(
-            "assets/images/google.png",
+            "assets/images/store.png",
             fit: BoxFit.cover,
             height: double.infinity,
           ),

@@ -1,5 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:storeapp_flutter/pages/forget_password_page.dart';
+import 'package:storeapp_flutter/pages/init_page.dart';
+import 'package:storeapp_flutter/pages/register_page.dart';
 import 'package:storeapp_flutter/widgets/auth_button_widget.dart';
 import 'package:storeapp_flutter/widgets/google_button_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
@@ -149,7 +152,9 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPasswordPage(),));
+                    },
                     child: const Text(
                       'Olvidaste tu contraseña?',
                       maxLines: 1,
@@ -167,6 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                 AuthButton(
                   fct: () {},
                   buttonText: 'Login',
+                  
                 ),
                 const SizedBox(
                   height: 10,
@@ -206,9 +212,17 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 AuthButton(
-                  fct: () {},
+                  fct: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => IntiPage(),
+                      ),
+                    );
+                  },
                   buttonText: 'Continuar como invitado',
-                  primary: Colors.black,
+                  
+                  
                 ),
                 const SizedBox(
                   height: 10,
@@ -225,7 +239,10 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.blueAccent,
                               fontSize: 18,
                               fontWeight: FontWeight.w600),
-                          recognizer: TapGestureRecognizer()..onTap = () {}),
+                          recognizer: TapGestureRecognizer()..onTap = () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage(),));
+
+                          }),
                     ]))
               ],
             ),

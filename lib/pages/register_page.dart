@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:storeapp_flutter/consts/constants.dart';
+import 'package:storeapp_flutter/pages/fetch_page.dart';
 import 'package:storeapp_flutter/pages/init_page.dart';
 import 'package:storeapp_flutter/pages/login_page.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
@@ -39,17 +42,32 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
+  bool _isLoading = false;
   void _submitFormOnRegister() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
+      setState(() {
+        _isLoading = true;
+      });
       try {
         await firebaseAuth.createUserWithEmailAndPassword(
-          email: _emailTextController.text.toLowerCase().trim(),
-          password: _passTextController.text,
-        );
-
+            email: _emailTextController.text.toLowerCase().trim(),
+            password: _passTextController.text.trim());
+        final User? user = firebaseAuth.currentUser;
+        final uid = user!.uid;
+        user.updateDisplayName(_fullNameController.text);
+        user.reload();
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'id': uid,
+          'nombre': _fullNameController.text,
+          'email': _emailTextController.text.toLowerCase(),
+          'direccion-envio': _addressTextController.text,
+          'lista': [],
+          'carrito': [],
+          'creado': Timestamp.now(),
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.green,
@@ -63,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => IntiPage(),
+              builder: (context) => FetchPage(),
             ));
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -252,16 +270,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _addressTextController,
                         validator: (value) {
                           if (value!.isEmpty || value.length < 10) {
-                            return "Ingrese mail valido";
+                            return "Direccion no valida";
                           } else {
                             return null;
                           }
                         },
                         style: const TextStyle(color: Colors.white),
-                        maxLines: 2,
+                        maxLines: 1,
                         textAlign: TextAlign.start,
                         decoration: const InputDecoration(
-                          hintText: 'Shipping address',
+                          hintText: 'Direcccion',
                           hintStyle: TextStyle(color: Colors.white),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white),

@@ -4,6 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/consts/constants.dart';
 import 'package:storeapp_flutter/models/products_model.dart';
+
 import 'package:storeapp_flutter/pages/on_sale_page.dart';
 import 'package:storeapp_flutter/pages/product_page.dart';
 import 'package:storeapp_flutter/provider/products_provider.dart';
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     final productProviders = Provider.of<ProductsProvider>(context);
     List<ProductModel> allProducts = productProviders.getProducts;
     List<ProductModel> productsOnSale = productProviders.getOnSaleProducts;
+    
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -90,12 +92,15 @@ class _HomePageState extends State<HomePage> {
                   child: SizedBox(
                     height: util.getScreenSize.height * 0.22,
                     child: ListView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return OnSaleWidget();
-                      },
-                    ),
+                        itemCount: productsOnSale.length < 10
+                            ? productsOnSale.length
+                            : 10,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index) {
+                          return ChangeNotifierProvider.value(
+                              value: productsOnSale[index],
+                              child: OnSaleWidget());
+                        }),
                   ),
                 ),
               ],
@@ -137,10 +142,15 @@ class _HomePageState extends State<HomePage> {
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               crossAxisCount: 2,
-              childAspectRatio:
-                  util.getScreenSize.width / (util.getScreenSize.height * 0.64),
-              children: List.generate(allProducts.length, (index) {
-                return ProductItemWidget(productModel: allProducts[index]);
+              childAspectRatio: 260 / 310,
+              children: List.generate(
+                  allProducts.length < 4
+                      ? allProducts.length // length 3
+                      : 4, (index) {
+                return ChangeNotifierProvider.value(
+                  value: allProducts[index],
+                  child: ProductItemWidget(),
+                );
               }),
             ),
           ],

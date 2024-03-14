@@ -7,7 +7,9 @@ import 'package:storeapp_flutter/pages/cart_page.dart';
 import 'package:storeapp_flutter/pages/categories_page.dart';
 import 'package:storeapp_flutter/pages/home_page.dart';
 import 'package:storeapp_flutter/pages/user_page.dart';
+import 'package:storeapp_flutter/provider/cart_provider.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
+import 'package:storeapp_flutter/provider/wishlist_provider.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 // ignore: must_be_immutable
@@ -26,6 +28,7 @@ class _BottonBarWidgetState extends State<IntiPage> {
   int _activeIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     final themeState = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       backgroundColor:
@@ -57,7 +60,7 @@ class _BottonBarWidgetState extends State<IntiPage> {
             ),
             badgeContent: FittedBox(
                 child:
-                    TextWidget(text: "1", color: Colors.white, textSize: 15)),
+                    TextWidget(text: cartProvider.getCartItems.length.toString(), color: Colors.white, textSize: 15)),
             child: Icon(_activeIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
           ),
           Icon(_activeIndex == 3 ? IconlyBold.user_2 : IconlyLight.user),

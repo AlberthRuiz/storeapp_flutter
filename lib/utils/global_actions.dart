@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:storeapp_flutter/consts/constants.dart';
+import 'package:storeapp_flutter/pages/login_page.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 import 'package:uuid/uuid.dart';
 
@@ -34,9 +35,15 @@ class GlobalActions {
             ),
             actions: [
               TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (Navigator.canPop(context)) {
+                    await firebaseAuth.signOut();
                     Navigator.pop(context);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                    );
                   }
                 },
                 child: TextWidget(
@@ -160,7 +167,7 @@ class GlobalActions {
     final cartId = const Uuid().v4();
     try {
       FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'userCart': FieldValue.arrayUnion([
+        'carrito': FieldValue.arrayUnion([
           {
             'cartId': cartId,
             'productId': productId,
@@ -182,21 +189,25 @@ class GlobalActions {
       {required String productId, required BuildContext context}) async {
     final User? user = firebaseAuth.currentUser;
     final uid = user!.uid;
-    final wishlistId = const Uuid().v4();
+    final listaId = const Uuid().v4();
     try {
       FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'userWish': FieldValue.arrayUnion([
+        'lista': FieldValue.arrayUnion([
           {
-            'wishlistId': wishlistId,
+            'listaId': listaId,
             'productId': productId,
           }
         ])
       });
-      await Fluttertoast.showToast(
-        msg: "Item agregado a lista deseos",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-      );
+      await ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.greenAccent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(26),
+        ),
+        behavior: SnackBarBehavior.floating,
+        content: Text("Item agregado"),
+      ));
+
     } catch (error) {
       errorDialog(subtitle: error.toString(), context: context);
     }

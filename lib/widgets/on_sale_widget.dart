@@ -39,11 +39,11 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => ProductDetailsPage(id: productModel.id),
-            //     ));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailsPage(id: productModel.id),
+                ));
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),

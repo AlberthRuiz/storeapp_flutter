@@ -11,17 +11,7 @@ class WishlistProvider extends ChangeNotifier {
     return _wishlistItems;
   }
 
-  // void addRemoveProductToWishlist({required String productId}) {
-  //   if (_wishlistItems.containsKey(productId)) {
-  //     removeOneItem(productId);
-  //   } else {
-  //     _wishlistItems.putIfAbsent(
-  //         productId,
-  //         () => WishlistModel(
-  //             id: DateTime.now().toString(), productId: productId));
-  //   }
-  //   notifyListeners();
-  // }
+
 
   final userCollection = FirebaseFirestore.instance.collection('users');
 
@@ -29,27 +19,27 @@ class WishlistProvider extends ChangeNotifier {
     final User? user = firebaseAuth.currentUser;
     final DocumentSnapshot userDoc = await userCollection.doc(user!.uid).get();
 
-    final leng = userDoc.get('userWish').length;
+    final leng = userDoc.get('lista').length;
     for (int i = 0; i < leng; i++) {
       _wishlistItems.putIfAbsent(
-          userDoc.get('userWish')[i]['productId'],
+          userDoc.get('lista')[i]['productId'],
           () => WishlistModel(
-                id: userDoc.get('userWish')[i]['wishlistId'],
-                productId: userDoc.get('userWish')[i]['productId'],
+                id: userDoc.get('lista')[i]['listaId'],
+                productId: userDoc.get('lista')[i]['productId'],
               ));
     }
     notifyListeners();
   }
 
   Future<void> removeOneItem({
-    required String wishlistId,
+    required String listaId,
     required String productId,
   }) async {
     final User? user = firebaseAuth.currentUser;
     await userCollection.doc(user!.uid).update({
-      'userWish': FieldValue.arrayRemove([
+      'lista': FieldValue.arrayRemove([
         {
-          'wishlistId': wishlistId,
+          'listaId': listaId,
           'productId': productId,
         }
       ])
@@ -62,7 +52,7 @@ class WishlistProvider extends ChangeNotifier {
   Future<void> clearOnlineWishlist() async {
     final User? user = firebaseAuth.currentUser;
     await userCollection.doc(user!.uid).update({
-      'userWish': [],
+      'lista': [],
     });
     _wishlistItems.clear();
     notifyListeners();

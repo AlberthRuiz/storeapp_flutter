@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/models/products_model.dart';
 import 'package:storeapp_flutter/provider/products_provider.dart';
@@ -18,7 +19,7 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> {
   final TextEditingController? _searchController = TextEditingController();
   final FocusNode _searchTextFocusNode = FocusNode();
-
+  late List<ProductModel> listProdcutSearch = [];
   @override
   void dispose() {
     _searchController!.dispose();
@@ -29,10 +30,10 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     final util = Utils(context);
-    Size size = Utils(context).getScreenSize;
+    
     final productsProvider = Provider.of<ProductsProvider>(context);
     List<ProductModel> allProducts = productsProvider.getProducts;
-    List<ProductModel> listProdcutSearch = [];
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -60,13 +61,10 @@ class _ProductsPageState extends State<ProductsPage> {
                   focusNode: _searchTextFocusNode,
                   controller: _searchController,
                   onChanged: (value) {
-                    print(value);
                     setState(() {
-                      if (value.length > 3) {
-                        listProdcutSearch = productsProvider.searchQuery(value);
-                      } else {
-                        listProdcutSearch = allProducts;
-                      }
+                      print(value);
+                      listProdcutSearch = productsProvider.searchQuery(value);
+                      print(listProdcutSearch.length);
                     });
                   },
                   decoration: InputDecoration(
@@ -85,7 +83,10 @@ class _ProductsPageState extends State<ProductsPage> {
                         ),
                       ),
                       hintText: " Que deseas buscar?...",
-                      prefix: Icon(Icons.search),
+                      prefix: Padding(
+                        padding: const EdgeInsets.only(right: 10, top: 10),
+                        child: Icon(IconlyLight.search),
+                      ),
                       suffixIcon: IconButton(
                         onPressed: () {
                           _searchController!.clear();
@@ -102,19 +103,25 @@ class _ProductsPageState extends State<ProductsPage> {
               ),
             ),
             _searchController!.text.isNotEmpty && listProdcutSearch.isEmpty
-                ? const EmptyProdWidget(text: 'No se encontraron productos')
+                ? const EmptyProdWidget(text: 'Productos no encontrado  ')
                 : GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
                     padding: EdgeInsets.zero,
                     // crossAxisSpacing: 10,
-                    childAspectRatio: size.width / (size.height * 0.61),
-                    children: List.generate(listProdcutSearch.length, (index) {
+                    childAspectRatio: 260 / 310,
+                    children: List.generate(
+                        _searchController.text.isNotEmpty
+                            ? listProdcutSearch.length
+                            : allProducts.length, (index) {
+                      print(listProdcutSearch.length);
+
                       return ChangeNotifierProvider.value(
-                        value: listProdcutSearch[index],
-                        child:
-                            ProductItemWidget(productModel: allProducts[index]),
+                        value: _searchController.text.isNotEmpty
+                            ? listProdcutSearch[index]
+                            : allProducts[index],
+                        child: ProductItemWidget(),
                       );
                     }),
                   ),

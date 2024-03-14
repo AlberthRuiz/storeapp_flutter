@@ -7,7 +7,7 @@ import 'package:storeapp_flutter/consts/constants.dart';
 import 'package:storeapp_flutter/models/products_model.dart';
 import 'package:storeapp_flutter/pages/product_details_page.dart';
 import 'package:storeapp_flutter/provider/cart_provider.dart';
-import 'package:storeapp_flutter/provider/products_provider.dart';
+
 import 'package:storeapp_flutter/provider/wishlist_provider.dart';
 import 'package:storeapp_flutter/utils/global_actions.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
@@ -16,9 +16,6 @@ import 'package:storeapp_flutter/widgets/price_widget.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class ProductItemWidget extends StatefulWidget {
-  ProductItemWidget({required this.productModel});
-  ProductModel productModel;
-
   @override
   State<ProductItemWidget> createState() => _ProductItemWidgetState();
 }
@@ -41,8 +38,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
-    // final productsProvider = Provider.of<ProductsProvider>(context);
-    final productModel = widget.productModel;
+    final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     bool? isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
@@ -65,14 +61,14 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
           child: Column(children: [
             FancyShimmerImage(
               imageUrl: productModel.imageUrl,
-              height: size.width * 0.21,
+              height: size.width * 0.2,
               width: size.width * 0.2,
               boxFit: BoxFit.fill,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Flexible(
                     flex: 3,
@@ -94,9 +90,9 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Flexible(
                     flex: 3,
@@ -125,12 +121,12 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                           width: 5,
                         ),
                         Flexible(
-                            flex: 2,
-                            // TextField can be used also instead of the textFormField
+                            flex: 1,                            
                             child: TextFormField(
+                              textAlign: TextAlign.center,
                               controller: _cantidadControlller,
                               key: const ValueKey('10'),
-                              style: TextStyle(color: color, fontSize: 18),
+                              style: TextStyle(color: color, fontSize: 16),
                               keyboardType: TextInputType.number,
                               maxLines: 1,
                               enabled: true,
@@ -156,9 +152,6 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                 onPressed: isInCart
                     ? null
                     : () async {
-                        // if (_isInCart) {
-                        //   return;
-                        // }
                         final User? user = firebaseAuth.currentUser;
 
                         if (user == null) {

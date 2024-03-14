@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 class AuthButton extends StatelessWidget {
@@ -17,16 +18,18 @@ class AuthButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: primary, // background (button) color
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            backgroundColor: primary,
           ),
           onPressed: () {
             fct();
-            // _submitFormOnLogin();
           },
           child: TextWidget(
             text: buttonText,
             textSize: 18,
-            color: Colors.white,
+            color: Utils(context).color,
           )),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storeapp_flutter/pages/product_details_page.dart';
+import 'package:storeapp_flutter/pages/product_page.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
@@ -71,7 +71,7 @@ class EmptyPage extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ProductDetailsPage(),
+                        builder: (context) => ProductsPage(),
                       ));
                 },
                 child: TextWidget(

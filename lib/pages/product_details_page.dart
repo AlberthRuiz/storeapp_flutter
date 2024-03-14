@@ -74,16 +74,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             elevation: 0,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor),
         body: Column(children: [
-          Flexible(
-            flex: 2,
+          Expanded(
+            flex: 1,
             child: FancyShimmerImage(
               imageUrl: getCurrProduct.imageUrl,
               boxFit: BoxFit.scaleDown,
               width: size.width,
-              // height: screenHeight * .4,
             ),
           ),
-          Flexible(
+          Expanded(
             flex: 3,
             child: Container(
               decoration: BoxDecoration(
@@ -102,13 +101,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(
-                          child: TextWidget(
-                            text: getCurrProduct.title,
-                            color: color,
-                            textSize: 25,
-                            isTitle: true,
-                          ),
+                        TextWidget(
+                          text: getCurrProduct.title,
+                          color: color,
+                          textSize: 25,
+                          isTitle: true,
                         ),
                         HeartButtonWidget(
                           productId: getCurrProduct.id,
@@ -152,10 +149,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         const Spacer(),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 8),
+                              vertical: 8, horizontal: 8),
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(63, 200, 101, 1),
-                              borderRadius: BorderRadius.circular(5)),
+                              borderRadius: BorderRadius.circular(20)),
                           child: TextWidget(
                             text: 'Envio Gratis',
                             color: Colors.white,
@@ -190,7 +187,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       const SizedBox(
                         width: 5,
                       ),
-                      Flexible(
+                      Expanded(
                         flex: 1,
                         child: TextField(
                           controller: _quantityTextController,
@@ -200,6 +197,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                           ),
+                          style: TextStyle(color: color, fontSize: 16),
                           textAlign: TextAlign.center,
                           cursorColor: Colors.green,
                           enabled: true,
@@ -232,102 +230,100 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ],
                   ),
                   const Spacer(),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 30),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 30),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextWidget(
-                                text: 'Total',
-                                color: Colors.red.shade300,
-                                textSize: 20,
-                                isTitle: true,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              FittedBox(
-                                child: Row(
-                                  children: [
-                                    TextWidget(
-                                      text:
-                                          'S/.${totalPrice.toStringAsFixed(2)}/',
-                                      color: color,
-                                      textSize: 20,
-                                      isTitle: true,
-                                    ),
-                                    TextWidget(
-                                      text: '${_quantityTextController.text}Kg',
-                                      color: color,
-                                      textSize: 16,
-                                      isTitle: false,
-                                    ),
-                                  ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextWidget(
+                                  text: 'Total',
+                                  color: Colors.red.shade300,
+                                  textSize: 20,
+                                  isTitle: true,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Flexible(
-                          child: Material(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10),
-                            child: InkWell(
-                              onTap: isInCart
-                                  ? null
-                                  : () async {
-                                      // if (_isInCart) {
-                                      //   return;
-                                      // }
-                                      final User? user =
-                                          firebaseAuth.currentUser;
-
-                                      if (user == null) {
-                                        GlobalActions.errorDialog(
-                                            subtitle: 'Inicie sesion',
-                                            context: context);
-                                        return;
-                                      }
-                                      await GlobalActions.addToCart(
-                                          productId: getCurrProduct.id,
-                                          quantity: int.parse(
-                                              _quantityTextController.text),
-                                          context: context);
-                                      await cartProvider.fetchCart();
-                                      // cartProvider.addProductsToCart(
-                                      //     productId: getCurrProduct.id,
-                                      //     quantity: int.parse(
-                                      //         _quantityTextController.text));
-                                    },
-                              borderRadius: BorderRadius.circular(10),
-                              child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: TextWidget(
-                                      text: isInCart
-                                          ? 'Agregado'
-                                          : 'Agregar al carro',
-                                      color: Colors.white,
-                                      textSize: 18)),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                FittedBox(
+                                  child: Row(
+                                    children: [
+                                      TextWidget(
+                                        text:
+                                            'S/.${totalPrice.toStringAsFixed(2)}/',
+                                        color: color,
+                                        textSize: 20,
+                                        isTitle: true,
+                                      ),
+                                      TextWidget(
+                                        text:
+                                            '${_quantityTextController.text}Kg',
+                                        color: color,
+                                        textSize: 16,
+                                        isTitle: false,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: Material(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(10),
+                                child: InkWell(
+                                  onTap: isInCart
+                                      ? null
+                                      : () async {
+                                          final User? user =
+                                              firebaseAuth.currentUser;
+
+                                          if (user == null) {
+                                            GlobalActions.errorDialog(
+                                                subtitle: 'Inicie sesion',
+                                                context: context);
+                                            return;
+                                          }
+                                          await GlobalActions.addToCart(
+                                              productId: getCurrProduct.id,
+                                              quantity: int.parse(
+                                                  _quantityTextController.text),
+                                              context: context);
+                                          await cartProvider.fetchCart();
+                                        },
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: TextWidget(
+                                          text:
+                                              isInCart ? 'Agregado' : 'Agregar',
+                                          color: Colors.white,
+                                          textSize: 18)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

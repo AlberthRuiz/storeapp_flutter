@@ -19,9 +19,9 @@ class CartPage extends StatelessWidget {
         cartProvider.getCartItems.values.toList().reversed.toList();
     return cartItemsList.isEmpty
         ? const EmptyPage(
-            title: 'Your cart is empty',
-            subtitle: 'Add something and make me happy :)',
-            buttonText: 'Shop now',
+            title: 'Carrito vacio',
+            subtitle: 'Agregar un producto',
+            buttonText: 'Comprar',
             imagePath: 'assets/images/empty-cart.png',
           )
         : Scaffold(
@@ -30,7 +30,7 @@ class CartPage extends StatelessWidget {
                 elevation: 0,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 title: TextWidget(
-                  text: 'Cart (${cartItemsList.length})',
+                  text: 'Carrito (${cartItemsList.length})',
                   color: color,
                   isTitle: true,
                   textSize: 22,
@@ -39,8 +39,8 @@ class CartPage extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       GlobalActions.warningDialog(
-                          title: 'Empty your cart?',
-                          subtitle: 'Are you sure?',
+                          title: 'Eliminar?',
+                          subtitle: 'Esta seguro?',
                           fct: () async {
                             await cartProvider.clearOnlineCart();
                             cartProvider.clearLocalCart();
@@ -54,6 +54,7 @@ class CartPage extends StatelessWidget {
                   ),
                 ]),
             body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _comprar(context: context),
                 Expanded(

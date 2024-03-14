@@ -57,7 +57,7 @@ class ProductsProvider extends ChangeNotifier {
     List<ProductModel> searchList = _productsList
         .where(
           (element) => element.title.toLowerCase().contains(
-                searchText.toLowerCase(),
+                searchText.toLowerCase().trim(),
               ),
         )
         .toList();

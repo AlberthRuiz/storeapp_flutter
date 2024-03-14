@@ -37,5 +37,5 @@ class Consts {
 }
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-final User? user = firebaseAuth.currentUser;
-final uid = user!.uid;
+// final User? user = firebaseAuth.currentUser;
+// final uid = user!.uid;

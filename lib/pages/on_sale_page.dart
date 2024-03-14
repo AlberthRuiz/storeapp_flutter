@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:storeapp_flutter/models/products_model.dart';
+import 'package:storeapp_flutter/provider/products_provider.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/back_widget.dart';
 import 'package:storeapp_flutter/widgets/on_sale_widget.dart';
@@ -11,7 +14,9 @@ class OnSalePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isEmpty = false;
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> productsOnSale = productProviders.getOnSaleProducts;
+    bool _isEmpty = productsOnSale.length<1;
     final util = Utils(context);
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +24,7 @@ class OnSalePage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: TextWidget(
-          text: "Productos con descuento",
+          text: "Descuento",
           color: util.color,
           textSize: 24,
           isTitle: true,
@@ -54,8 +59,9 @@ class OnSalePage extends StatelessWidget {
               crossAxisCount: 2,
               childAspectRatio:
                   util.getScreenSize.width / (util.getScreenSize.height * 0.45),
-              children: List.generate(16, (index) {
-                return OnSaleWidget();
+              children: List.generate(productsOnSale.length, (index) {
+                return ChangeNotifierProvider.value(
+                    value: productsOnSale[index], child: OnSaleWidget());
               }),
             ),
     );

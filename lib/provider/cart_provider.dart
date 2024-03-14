@@ -16,14 +16,14 @@ class CartProvider extends ChangeNotifier {
     final User? user = firebaseAuth.currentUser;
     final DocumentSnapshot userDoc = await userCollection.doc(user!.uid).get();
 
-    final leng = userDoc.get('userCart').length;
+    final leng = await userDoc.get('carrito').length;
     for (int i = 0; i < leng; i++) {
       _cartItems.putIfAbsent(
-          userDoc.get('userCart')[i]['productId'],
+          userDoc.get('carrito')[i]['productId'],
           () => CartModel(
-                id: userDoc.get('userCart')[i]['cartId'],
-                productId: userDoc.get('userCart')[i]['productId'],
-                quantity: userDoc.get('userCart')[i]['quantity'],
+                id: userDoc.get('carrito')[i]['cartId'],
+                productId: userDoc.get('carrito')[i]['productId'],
+                quantity: userDoc.get('carrito')[i]['quantity'],
               ));
     }
     notifyListeners();
@@ -60,7 +60,7 @@ class CartProvider extends ChangeNotifier {
       required int quantity}) async {
     final User? user = firebaseAuth.currentUser;
     await userCollection.doc(user!.uid).update({
-      'userCart': FieldValue.arrayRemove([
+      'carrito': FieldValue.arrayRemove([
         {'cartId': cartId, 'productId': productId, 'quantity': quantity}
       ])
     });
@@ -72,7 +72,7 @@ class CartProvider extends ChangeNotifier {
   Future<void> clearOnlineCart() async {
     final User? user = firebaseAuth.currentUser;
     await userCollection.doc(user!.uid).update({
-      'userCart': [],
+      'carrito': [],
     });
     _cartItems.clear();
     notifyListeners();
