@@ -35,15 +35,9 @@ class GlobalActions {
             ),
             actions: [
               TextButton(
-                onPressed: () async {
+                onPressed: () {
                   if (Navigator.canPop(context)) {
-                    await firebaseAuth.signOut();
                     Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
-                    );
                   }
                 },
                 child: TextWidget(
@@ -53,7 +47,14 @@ class GlobalActions {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await firebaseAuth.signOut();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                },
                 child: TextWidget(
                   color: Colors.redAccent,
                   text: "OK",
@@ -207,7 +208,6 @@ class GlobalActions {
         behavior: SnackBarBehavior.floating,
         content: Text("Item agregado"),
       ));
-
     } catch (error) {
       errorDialog(subtitle: error.toString(), context: context);
     }

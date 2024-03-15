@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/firebase_options.dart';
 import 'package:storeapp_flutter/pages/fetch_page.dart';
-import 'package:storeapp_flutter/pages/on_sale_page.dart';
 import 'package:storeapp_flutter/provider/cart_provider.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
 import 'package:storeapp_flutter/provider/orders_provider.dart';
@@ -88,13 +87,11 @@ class _MyAppState extends State<MyApp> {
             child: Consumer<DarkThemeProvider>(
                 builder: (context, themeProvider, child) {
               return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
-                  theme: Styles.themeData(themeProvider.getDarkTheme, context),
-                  home: FetchPage(),
-                  routes: {
-                    OnSalePage.routName: (ctx) => const OnSalePage(),
-                  });
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                theme: Styles.themeData(themeProvider.getDarkTheme, context),
+                home: FetchPage(),
+              );
             }),
           );
         });
