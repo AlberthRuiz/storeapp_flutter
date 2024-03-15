@@ -112,7 +112,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                             child: TextWidget(
                               text: productModel.isUnd ? 'Und' : 'kg',
                               color: color,
-                              textSize: 20,
+                              textSize: 12,
                               isTitle: true,
                             ),
                           ),
@@ -121,7 +121,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                           width: 5,
                         ),
                         Flexible(
-                            flex: 1,                            
+                            flex: 5,
                             child: TextFormField(
                               textAlign: TextAlign.center,
                               controller: _cantidadControlller,
@@ -131,7 +131,9 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                               maxLines: 1,
                               enabled: true,
                               onChanged: (valueee) {
-                                setState(() {});
+                                if (!valueee.isEmpty) {
+                                  setState(() {});
+                                }
                               },
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
@@ -152,6 +154,9 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                 onPressed: isInCart
                     ? null
                     : () async {
+                        if (_cantidadControlller.text.isEmpty) {
+                          _cantidadControlller.text = "1";
+                        }
                         final User? user = firebaseAuth.currentUser;
 
                         if (user == null) {

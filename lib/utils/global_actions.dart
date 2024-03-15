@@ -172,7 +172,7 @@ class GlobalActions {
           {
             'cartId': cartId,
             'productId': productId,
-            'quantity': quantity,
+            "cantidad": quantity,
           }
         ])
       });

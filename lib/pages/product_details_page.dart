@@ -191,7 +191,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         flex: 1,
                         child: TextField(
                           controller: _quantityTextController,
-                          key: const ValueKey('quantity'),
+                          key: const ValueKey("cantidad"),
                           keyboardType: TextInputType.number,
                           maxLines: 1,
                           decoration: const InputDecoration(
@@ -205,11 +205,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                           ],
                           onChanged: (value) {
-                            setState(() {
-                              if (value.isEmpty) {
-                                _quantityTextController.text = '1';
-                              } else {}
-                            });
+                            if (!value.isEmpty) {
+                              setState(() {});
+                            }
                           },
                         ),
                       ),

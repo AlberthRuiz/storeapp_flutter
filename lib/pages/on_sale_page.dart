@@ -16,7 +16,7 @@ class OnSalePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final productProviders = Provider.of<ProductsProvider>(context);
     List<ProductModel> productsOnSale = productProviders.getOnSaleProducts;
-    bool _isEmpty = productsOnSale.length<1;
+    bool _isEmpty = productsOnSale.length < 1;
     final util = Utils(context);
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +58,7 @@ class OnSalePage extends StatelessWidget {
               padding: EdgeInsets.zero,
               crossAxisCount: 2,
               childAspectRatio:
-                  util.getScreenSize.width / (util.getScreenSize.height * 0.45),
+                  util.getScreenSize.width / (util.getScreenSize.height * 0.50),
               children: List.generate(productsOnSale.length, (index) {
                 return ChangeNotifierProvider.value(
                     value: productsOnSale[index], child: OnSaleWidget());

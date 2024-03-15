@@ -157,7 +157,7 @@ class _UserPageState extends State<UserPage> {
               ),
               UserListTileWidget(
                 titulo: "Direccion",
-                subtitulo: "Detalle",
+                subtitulo: address,
                 leadingIcon: themeState.getDarkTheme
                     ? Icon(
                         IconlyBold.location,
@@ -292,6 +292,10 @@ class _UserPageState extends State<UserPage> {
             actions: [
               TextButton(
                 onPressed: () async {
+                  if (_addressTextController.text.isEmpty) {
+                    Navigator.pop(context);
+                    return;
+                  }
                   if (user == null) {
                     Navigator.pop(context);
                   } else {

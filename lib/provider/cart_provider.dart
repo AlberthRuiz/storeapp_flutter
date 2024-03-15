@@ -23,7 +23,7 @@ class CartProvider extends ChangeNotifier {
           () => CartModel(
                 id: userDoc.get('carrito')[i]['cartId'],
                 productId: userDoc.get('carrito')[i]['productId'],
-                quantity: userDoc.get('carrito')[i]['quantity'],
+                quantity: userDoc.get('carrito')[i]["cantidad"],
               ));
     }
     notifyListeners();
@@ -61,7 +61,7 @@ class CartProvider extends ChangeNotifier {
     final User? user = firebaseAuth.currentUser;
     await userCollection.doc(user!.uid).update({
       'carrito': FieldValue.arrayRemove([
-        {'cartId': cartId, 'productId': productId, 'quantity': quantity}
+        {'cartId': cartId, 'productId': productId, "cantidad": quantity}
       ])
     });
     _cartItems.remove(productId);

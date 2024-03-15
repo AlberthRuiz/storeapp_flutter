@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:storeapp_flutter/consts/constants.dart';
 import 'package:storeapp_flutter/pages/fetch_page.dart';
-import 'package:storeapp_flutter/pages/init_page.dart';
 import 'package:storeapp_flutter/pages/login_page.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 import 'package:storeapp_flutter/widgets/auth_button_widget.dart';
@@ -42,7 +41,9 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
+  // ignore: unused_field
   bool _isLoading = false;
+
   void _submitFormOnRegister() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();

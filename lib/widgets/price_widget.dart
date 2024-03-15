@@ -25,7 +25,7 @@ class PriceWidget extends StatelessWidget {
         TextWidget(
           text: 'S/.${(userPrice * int.parse(textPrice)).toStringAsFixed(2)}',
           color: Colors.green,
-          textSize: 16,
+          textSize: 14,
         ),
         const SizedBox(
           width: 5,
@@ -35,7 +35,7 @@ class PriceWidget extends StatelessWidget {
           child: Text(
             'S/.${(price * int.parse(textPrice)).toStringAsFixed(2)}',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               color: color,
               decoration: TextDecoration.lineThrough,
             ),

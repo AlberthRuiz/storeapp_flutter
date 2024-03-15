@@ -16,7 +16,7 @@ class OrdersProvider extends ChangeNotifier {
     await FirebaseFirestore.instance
         .collection('orders')
         .where('userId', isEqualTo: uid)
-        .orderBy('orderDate', descending: false)
+        .orderBy("ferchaPedido", descending: false)
         .get()
         .then((QuerySnapshot ordersSnapshot) {
       _orders = [];
@@ -25,14 +25,14 @@ class OrdersProvider extends ChangeNotifier {
         _orders.insert(
           0,
           OrderModel(
-            orderId: element.get('orderId'),
+            orderId: element.get("idPedido"),
             userId: element.get('userId'),
             productId: element.get('productId'),
-            userName: element.get('userName'),
-            price: element.get('price').toString(),
+            userName: element.get("nombreUsuario"),
+            price: element.get("precio").toString(),
             imageUrl: element.get('imageUrl'),
-            quantity: element.get('quantity').toString(),
-            orderDate: element.get('orderDate'),
+            quantity: element.get("cantidad").toString(),
+            orderDate: element.get("ferchaPedido"),
           ),
         );
       }

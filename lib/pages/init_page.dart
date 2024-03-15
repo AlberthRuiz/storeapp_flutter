@@ -9,7 +9,6 @@ import 'package:storeapp_flutter/pages/home_page.dart';
 import 'package:storeapp_flutter/pages/user_page.dart';
 import 'package:storeapp_flutter/provider/cart_provider.dart';
 import 'package:storeapp_flutter/provider/dark_theme_provider.dart';
-import 'package:storeapp_flutter/provider/wishlist_provider.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
 
 // ignore: must_be_immutable
@@ -59,8 +58,10 @@ class _BottonBarWidgetState extends State<IntiPage> {
               end: -7,
             ),
             badgeContent: FittedBox(
-                child:
-                    TextWidget(text: cartProvider.getCartItems.length.toString(), color: Colors.white, textSize: 15)),
+                child: TextWidget(
+                    text: cartProvider.getCartItems.length.toString(),
+                    color: Colors.white,
+                    textSize: 15)),
             child: Icon(_activeIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
           ),
           Icon(_activeIndex == 3 ? IconlyBold.user_2 : IconlyLight.user),

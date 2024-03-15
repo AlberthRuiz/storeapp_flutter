@@ -48,11 +48,11 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       FancyShimmerImage(
                         imageUrl: productModel.imageUrl,
