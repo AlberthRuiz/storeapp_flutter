@@ -81,7 +81,6 @@ class CartPage extends StatelessWidget {
   }
 
   Widget _comprar({required BuildContext context}) {
-    final util = Utils(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     final cartProvider = Provider.of<CartProvider>(context);
@@ -136,7 +135,6 @@ class CartPage extends StatelessWidget {
                     });
                     await cartProvider.clearOnlineCart();
                     cartProvider.clearLocalCart();
-                    // TODO fetch the orders here.
                     await Fluttertoast.showToast(
                       msg: "Tu orden fue enviada!",
                       toastLength: Toast.LENGTH_SHORT,
