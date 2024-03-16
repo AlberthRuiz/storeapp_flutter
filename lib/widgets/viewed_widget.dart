@@ -1,12 +1,10 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/consts/constants.dart';
 import 'package:storeapp_flutter/models/viewed_model.dart';
-import 'package:storeapp_flutter/pages/product_details_page.dart';
 import 'package:storeapp_flutter/provider/cart_provider.dart';
 import 'package:storeapp_flutter/provider/products_provider.dart';
 import 'package:storeapp_flutter/utils/global_actions.dart';
@@ -39,8 +37,7 @@ class _ViewedWidgetState extends State<ViewedWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {
-        },
+        onTap: () {},
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +93,7 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                                 idproducto: getCurrProduct.id,
                                 cantidad: 1,
                                 context: context);
-                            await cartProvider.fetchCart();                 
+                            await cartProvider.fetchCart();
                           },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

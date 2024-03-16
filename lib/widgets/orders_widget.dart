@@ -2,7 +2,6 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:storeapp_flutter/models/orders_model.dart';
-import 'package:storeapp_flutter/pages/product_details_page.dart';
 import 'package:storeapp_flutter/provider/products_provider.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
 
