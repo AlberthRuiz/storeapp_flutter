@@ -57,7 +57,7 @@ class _UserPageState extends State<UserPage> {
       String _uid = user!.uid;
 
       final DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+          await FirebaseFirestore.instance.collection('usuarios').doc(_uid).get();
       _email = userDoc.get('email');
       _name = userDoc.get('nombre');
       address = userDoc.get('direccion-envio');
@@ -302,7 +302,7 @@ class _UserPageState extends State<UserPage> {
                     String _uid = user!.uid;
                     try {
                       await FirebaseFirestore.instance
-                          .collection('users')
+                          .collection('usuarios')
                           .doc(_uid)
                           .update({
                         'direccion-envio': _addressTextController.text,

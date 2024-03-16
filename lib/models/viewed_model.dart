@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class ViewedProdModel extends ChangeNotifier {
-  final String id, productId;
+  final String id, idproducto;
 
   ViewedProdModel({
     required this.id,
-    required this.productId,
+    required this.idproducto,
   });
 }

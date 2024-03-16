@@ -19,10 +19,10 @@ class WishlistWidget extends StatelessWidget {
     final wishlistModel = Provider.of<WishlistModel>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     final getCurrProduct =
-        productProvider.findProdById(wishlistModel.productId);
-    double usedPrice = getCurrProduct.isOnSale
-        ? getCurrProduct.salePrice
-        : getCurrProduct.price;
+        productProvider.findProdById(wishlistModel.idproducto);
+    double usedPrice = getCurrProduct.esOferta
+        ? getCurrProduct.precioVenta
+        : getCurrProduct.precio;
     bool? isInWishlist =
         wishlistProvider.getWishlistItems.containsKey(getCurrProduct.id);
     final Color color = Utils(context).color;
@@ -35,7 +35,7 @@ class WishlistWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    ProductDetailsPage(id: wishlistModel.productId),
+                    ProductDetailsPage(id: wishlistModel.idproducto),
               ));
         },
         child: Container(
@@ -76,7 +76,7 @@ class WishlistWidget extends StatelessWidget {
                             ),
                           ),
                           HeartButtonWidget(
-                            productId: getCurrProduct.id,
+                            idproducto: getCurrProduct.id,
                             isInWishlist: isInWishlist,
                           )
                         ],

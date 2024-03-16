@@ -7,7 +7,6 @@ import 'package:storeapp_flutter/consts/constants.dart';
 import 'package:storeapp_flutter/models/products_model.dart';
 import 'package:storeapp_flutter/pages/product_details_page.dart';
 import 'package:storeapp_flutter/provider/cart_provider.dart';
-
 import 'package:storeapp_flutter/provider/wishlist_provider.dart';
 import 'package:storeapp_flutter/utils/global_actions.dart';
 import 'package:storeapp_flutter/utils/utils.dart';
@@ -83,7 +82,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                   Flexible(
                       flex: 1,
                       child: HeartButtonWidget(
-                        productId: productModel.id,
+                        idproducto: productModel.id,
                         isInWishlist: isInWishlist,
                       )),
                 ],
@@ -97,10 +96,10 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                   Flexible(
                     flex: 3,
                     child: PriceWidget(
-                      salePrice: productModel.salePrice,
-                      price: productModel.price,
+                      precioVenta: productModel.precioVenta,
+                      precio: productModel.precio,
                       textPrice: _cantidadControlller.text,
-                      isOnSale: productModel.isOnSale,
+                      esOferta: productModel.esOferta,
                     ),
                   ),
                   Flexible(
@@ -165,8 +164,8 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                           return;
                         }
                         await GlobalActions.addToCart(
-                            productId: productModel.id,
-                            quantity: int.parse(_cantidadControlller.text),
+                            idproducto: productModel.id,
+                            cantidad: int.parse(_cantidadControlller.text),
                             context: context);
                         await cartProvider.fetchCart();
                       },

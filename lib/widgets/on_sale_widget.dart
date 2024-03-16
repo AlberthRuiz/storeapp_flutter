@@ -65,7 +65,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                           TextWidget(
                             text: productModel.isUnd ? '1Piece' : '1KG',
                             color: color,
-                            textSize: 22,
+                            textSize: 18,
                             isTitle: true,
                           ),
                           const SizedBox(
@@ -83,18 +83,18 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                                         if (user == null) {
                                           GlobalActions.errorDialog(
                                               subtitle:
-                                                  'No user found, Please login first',
+                                                  'Usuario no registrado',
                                               context: context);
                                           return;
                                         }
                                         await GlobalActions.addToCart(
-                                            productId: productModel.id,
-                                            quantity: 1,
+                                            idproducto: productModel.id,
+                                            cantidad: 1,
                                             context: context);
                                         await cartProvider.fetchCart();
                                         // cartProvider.addProductsToCart(
-                                        //     productId: productModel.id,
-                                        //     quantity: 1);
+                                        //     idproducto: productModel.id,
+                                        //     cantidad: 1);
                                       },
                                 child: Icon(
                                   isInCart ? IconlyBold.buy : IconlyLight.buy,
@@ -103,7 +103,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                                 ),
                               ),
                               HeartButtonWidget(
-                                productId: productModel.id,
+                                idproducto: productModel.id,
                                 isInWishlist: isInWishlist,
                               )
                             ],
@@ -113,10 +113,10 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                     ],
                   ),
                   PriceWidget(
-                    salePrice: productModel.salePrice,
-                    price: productModel.price,
+                    precioVenta: productModel.precioVenta,
+                    precio: productModel.precio,
                     textPrice: '1',
-                    isOnSale: true,
+                    esOferta: true,
                   ),
                   const SizedBox(height: 5),
                   TextWidget(

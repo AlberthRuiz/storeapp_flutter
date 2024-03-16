@@ -8,11 +8,11 @@ class ViewedProdProvider extends ChangeNotifier {
     return _viewedProdlistItems;
   }
 
-  void addProductToHistory({required String productId}) {
+  void addProductToHistory({required String idproducto}) {
     _viewedProdlistItems.putIfAbsent(
-        productId,
+        idproducto,
         () => ViewedProdModel(
-            id: DateTime.now().toString(), productId: productId));
+            id: DateTime.now().toString(), idproducto: idproducto));
 
     notifyListeners();
   }

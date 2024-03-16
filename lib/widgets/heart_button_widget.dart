@@ -10,9 +10,9 @@ import 'package:storeapp_flutter/utils/utils.dart';
 
 class HeartButtonWidget extends StatefulWidget {
   const HeartButtonWidget(
-      {Key? key, required this.productId, this.isInWishlist = false})
+      {Key? key, required this.idproducto, this.isInWishlist = false})
       : super(key: key);
-  final String productId;
+  final String idproducto;
   final bool? isInWishlist;
 
   @override
@@ -24,7 +24,7 @@ class _HeartButtonWidget extends State<HeartButtonWidget> {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductsProvider>(context);
-    final getCurrProduct = productProvider.findProdById(widget.productId);
+    final getCurrProduct = productProvider.findProdById(widget.idproducto);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     final Color color = Utils(context).color;
     return GestureDetector(
@@ -41,12 +41,12 @@ class _HeartButtonWidget extends State<HeartButtonWidget> {
           }
           if (widget.isInWishlist == false && widget.isInWishlist != null) {
             await GlobalActions.addToWishlist(
-                productId: widget.productId, context: context);
+                idproducto: widget.idproducto, context: context);
           } else {
             await wishlistProvider.removeOneItem(
                 listaId:
                     wishlistProvider.getWishlistItems[getCurrProduct.id]!.id,
-                productId: widget.productId);
+                idproducto: widget.idproducto);
           }
           await wishlistProvider.fetchWishlist();
           setState(() {

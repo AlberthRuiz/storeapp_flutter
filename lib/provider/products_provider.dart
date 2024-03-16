@@ -10,7 +10,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   List<ProductModel> get getOnSaleProducts {
-    return _productsList.where((element) => element.isOnSale).toList();
+    return _productsList.where((element) => element.esOferta).toList();
   }
 
   Future<void> fetchProducts() async {
@@ -28,11 +28,11 @@ class ProductsProvider extends ChangeNotifier {
               title: element.get('nombre'),
               imageUrl: element.get('imageUrl'),
               productCategoryName: element.get('categoria'),
-              price: double.parse(
+              precio: double.parse(
                 element.get('precio'),
               ),
-              salePrice: element.get('precioVenta'),
-              isOnSale: element.get('esOferta'),
+              precioVenta: element.get('precioVenta'),
+              esOferta: element.get('esOferta'),
               isUnd: element.get('isUnidad'),
             ));
       }
@@ -40,8 +40,8 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  ProductModel findProdById(String productId) {
-    return _productsList.firstWhere((element) => element.id == productId);
+  ProductModel findProdById(String idproducto) {
+    return _productsList.firstWhere((element) => element.id == idproducto);
   }
 
   List<ProductModel> findByCategory(String categoryName) {

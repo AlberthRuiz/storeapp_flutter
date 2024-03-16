@@ -9,12 +9,12 @@ import 'package:storeapp_flutter/utils/global_actions.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class AuthService {
-  signInWithGoogle(BuildContext context) async {
+  signInWithGoogle(BuildContext context) async {    
     final googleSignIn = GoogleSignIn();
     final googleAccount = await googleSignIn.signIn();
     if (googleAccount != null) {
       final googleAuth = await googleAccount.authentication;
-      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+      if (googleAuth.accessToken != null) {
         try {
           final authResult = await firebaseAuth.signInWithCredential(
             GoogleAuthProvider.credential(
@@ -24,7 +24,7 @@ class AuthService {
 
           if (authResult.additionalUserInfo!.isNewUser) {
             await FirebaseFirestore.instance
-                .collection('users')
+                .collection('usuarios')
                 .doc(authResult.user!.uid)
                 .set({
               'id': authResult.user!.uid,
@@ -36,7 +36,8 @@ class AuthService {
               'creado': Timestamp.now(),
             });
           }
-          Navigator.of(context).pushReplacement(
+          Navigator.push(
+            context,
             MaterialPageRoute(
               builder: (context) => const FetchPage(),
             ),

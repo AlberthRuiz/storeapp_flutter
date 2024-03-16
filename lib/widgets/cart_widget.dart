@@ -20,16 +20,16 @@ class CartWidget extends StatefulWidget {
 }
 
 class _CartWidgetState extends State<CartWidget> {
-  final _quantityTextController = TextEditingController();
+  final _cantidadTextController = TextEditingController();
   @override
   void initState() {
-    _quantityTextController.text = widget.q.toString();
+    _cantidadTextController.text = widget.q.toString();
     super.initState();
   }
 
   @override
   void dispose() {
-    _quantityTextController.dispose();
+    _cantidadTextController.dispose();
     super.dispose();
   }
 
@@ -39,10 +39,10 @@ class _CartWidgetState extends State<CartWidget> {
     Size size = Utils(context).getScreenSize;
     final productProvider = Provider.of<ProductsProvider>(context);
     final cartModel = Provider.of<CartModel>(context);
-    final getCurrProduct = productProvider.findProdById(cartModel.productId);
-    double usedPrice = getCurrProduct.isOnSale
-        ? getCurrProduct.salePrice
-        : getCurrProduct.price;
+    final getCurrProduct = productProvider.findProdById(cartModel.idproducto);
+    double usedPrice = getCurrProduct.esOferta
+        ? getCurrProduct.precioVenta
+        : getCurrProduct.precio;
     final cartProvider = Provider.of<CartProvider>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     bool? isInWishlist =
@@ -52,7 +52,7 @@ class _CartWidgetState extends State<CartWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailsPage(id: cartModel.productId),
+            builder: (context) => ProductDetailsPage(id: cartModel.idproducto),
           ),
         );
       },
@@ -95,16 +95,16 @@ class _CartWidgetState extends State<CartWidget> {
                           width: size.width * 0.3,
                           child: Row(
                             children: [
-                              _quantityController(
+                              _cantidadController(
                                 fct: () {
-                                  if (_quantityTextController.text == '1') {
+                                  if (_cantidadTextController.text == '1') {
                                     return;
                                   } else {
                                     cartProvider.reduceQuantityByOne(
-                                        cartModel.productId);
+                                        cartModel.idproducto);
                                     setState(() {
-                                      _quantityTextController.text = (int.parse(
-                                                  _quantityTextController
+                                      _cantidadTextController.text = (int.parse(
+                                                  _cantidadTextController
                                                       .text) -
                                               1)
                                           .toString();
@@ -117,7 +117,7 @@ class _CartWidgetState extends State<CartWidget> {
                               Flexible(
                                 flex: 1,
                                 child: TextField(
-                                  controller: _quantityTextController,
+                                  controller: _cantidadTextController,
                                   keyboardType: TextInputType.number,
                                   maxLines: 1,
                                   decoration: const InputDecoration(
@@ -133,7 +133,7 @@ class _CartWidgetState extends State<CartWidget> {
                                   onChanged: (v) {
                                     setState(() {
                                       if (v.isEmpty) {
-                                        _quantityTextController.text = '1';
+                                        _cantidadTextController.text = '1';
                                       } else {
                                         return;
                                       }
@@ -141,13 +141,13 @@ class _CartWidgetState extends State<CartWidget> {
                                   },
                                 ),
                               ),
-                              _quantityController(
+                              _cantidadController(
                                 fct: () {
                                   cartProvider.increaseQuantityByOne(
-                                      cartModel.productId);
+                                      cartModel.idproducto);
                                   setState(() {
-                                    _quantityTextController.text = (int.parse(
-                                                _quantityTextController.text) +
+                                    _cantidadTextController.text = (int.parse(
+                                                _cantidadTextController.text) +
                                             1)
                                         .toString();
                                   });
@@ -169,8 +169,8 @@ class _CartWidgetState extends State<CartWidget> {
                             onTap: () async {
                               await cartProvider.removeOneItem(
                                 cartId: cartModel.id,
-                                productId: cartModel.productId,
-                                quantity: cartModel.quantity,
+                                idproducto: cartModel.idproducto,
+                                cantidad: cartModel.cantidad,
                               );
                             },
                             child: const Icon(
@@ -183,12 +183,12 @@ class _CartWidgetState extends State<CartWidget> {
                             height: 5,
                           ),
                           HeartButtonWidget(
-                            productId: getCurrProduct.id,
+                            idproducto: getCurrProduct.id,
                             isInWishlist: isInWishlist,
                           ),
                           TextWidget(
                             text:
-                                'S/.${(usedPrice * int.parse(_quantityTextController.text)).toStringAsFixed(2)}',
+                                'S/.${(usedPrice * int.parse(_cantidadTextController.text)).toStringAsFixed(2)}',
                             color: color,
                             textSize: 18,
                             maxLines: 1,
@@ -209,7 +209,7 @@ class _CartWidgetState extends State<CartWidget> {
     );
   }
 
-  Widget _quantityController({
+  Widget _cantidadController({
     required Function fct,
     required IconData icon,
     required Color color,

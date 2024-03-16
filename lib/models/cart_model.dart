@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
 class CartModel extends ChangeNotifier {
-  final String id, productId;
-  final int quantity;
+  final String id, idproducto;
+  final int cantidad;
 
   CartModel({
     required this.id,
-    required this.productId,
-    required this.quantity,
+    required this.idproducto,
+    required this.cantidad,
   });
 }

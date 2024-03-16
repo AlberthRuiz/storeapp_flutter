@@ -13,7 +13,7 @@ class WishlistProvider extends ChangeNotifier {
 
 
 
-  final userCollection = FirebaseFirestore.instance.collection('users');
+  final userCollection = FirebaseFirestore.instance.collection('usuarios');
 
   Future<void> fetchWishlist() async {
     final User? user = firebaseAuth.currentUser;
@@ -22,10 +22,10 @@ class WishlistProvider extends ChangeNotifier {
     final leng = userDoc.get('lista').length;
     for (int i = 0; i < leng; i++) {
       _wishlistItems.putIfAbsent(
-          userDoc.get('lista')[i]['productId'],
+          userDoc.get('lista')[i]['idproducto'],
           () => WishlistModel(
                 id: userDoc.get('lista')[i]['listaId'],
-                productId: userDoc.get('lista')[i]['productId'],
+                idproducto: userDoc.get('lista')[i]['idproducto'],
               ));
     }
     notifyListeners();
@@ -33,18 +33,18 @@ class WishlistProvider extends ChangeNotifier {
 
   Future<void> removeOneItem({
     required String listaId,
-    required String productId,
+    required String idproducto,
   }) async {
     final User? user = firebaseAuth.currentUser;
     await userCollection.doc(user!.uid).update({
       'lista': FieldValue.arrayRemove([
         {
           'listaId': listaId,
-          'productId': productId,
+          'idproducto': idproducto,
         }
       ])
     });
-    _wishlistItems.remove(productId);
+    _wishlistItems.remove(idproducto);
     await fetchWishlist();
     notifyListeners();
   }

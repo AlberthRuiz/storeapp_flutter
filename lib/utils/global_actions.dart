@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:storeapp_flutter/consts/constants.dart';
 import 'package:storeapp_flutter/pages/login_page.dart';
 import 'package:storeapp_flutter/widgets/text_widget.dart';
@@ -49,6 +50,7 @@ class GlobalActions {
               TextButton(
                 onPressed: () async {
                   await firebaseAuth.signOut();
+                  await GoogleSignIn().signOut();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const LoginPage(),
@@ -138,7 +140,7 @@ class GlobalActions {
               const SizedBox(
                 width: 8,
               ),
-              const Text('An Error occured'),
+              const Text('Ocurrio un error'),
             ]),
             content: Text(subtitle),
             actions: [
@@ -160,26 +162,29 @@ class GlobalActions {
   }
 
   static Future<void> addToCart(
-      {required String productId,
-      required int quantity,
+      {required String idproducto,
+      required int cantidad,
       required BuildContext context}) async {
     final User? user = firebaseAuth.currentUser;
     final uid = user!.uid;
     final cartId = const Uuid().v4();
     try {
-      FirebaseFirestore.instance.collection('users').doc(uid).update({
+      FirebaseFirestore.instance.collection('usuarios').doc(uid).update({
         'carrito': FieldValue.arrayUnion([
           {
-            'cartId': cartId,
-            'productId': productId,
-            "cantidad": quantity,
+            'idCarrito': cartId,
+            'idproducto': idproducto,
+            "cantidad": cantidad,
           }
         ])
       });
+      
       await Fluttertoast.showToast(
-        msg: "Item has been added to your cart",
+        msg: "Producto agregado al carrito",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
+        
+
       );
     } catch (error) {
       errorDialog(subtitle: error.toString(), context: context);
@@ -187,16 +192,16 @@ class GlobalActions {
   }
 
   static Future<void> addToWishlist(
-      {required String productId, required BuildContext context}) async {
+      {required String idproducto, required BuildContext context}) async {
     final User? user = firebaseAuth.currentUser;
     final uid = user!.uid;
     final listaId = const Uuid().v4();
     try {
-      FirebaseFirestore.instance.collection('users').doc(uid).update({
+      FirebaseFirestore.instance.collection('usuarios').doc(uid).update({
         'lista': FieldValue.arrayUnion([
           {
             'listaId': listaId,
-            'productId': productId,
+            'idproducto': idproducto,
           }
         ])
       });

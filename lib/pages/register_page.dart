@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
         final uid = user!.uid;
         user.updateDisplayName(_fullNameController.text);
         user.reload();
-        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        await FirebaseFirestore.instance.collection('usuarios').doc(uid).set({
           'id': uid,
           'nombre': _fullNameController.text,
           'email': _emailTextController.text.toLowerCase(),

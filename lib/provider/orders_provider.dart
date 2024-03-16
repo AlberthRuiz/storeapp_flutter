@@ -13,30 +13,27 @@ class OrdersProvider extends ChangeNotifier {
     final FirebaseAuth auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
     var uid = user!.uid;
-    await FirebaseFirestore.instance
-        .collection('orders')
-        .where('userId', isEqualTo: uid)
-        .orderBy("ferchaPedido", descending: false)
-        .get()
-        .then((QuerySnapshot ordersSnapshot) {
-      _orders = [];
-      // _orders.clear();
-      for (var element in ordersSnapshot.docs) {
-        _orders.insert(
-          0,
-          OrderModel(
-            orderId: element.get("idPedido"),
-            userId: element.get('userId'),
-            productId: element.get('productId'),
-            userName: element.get("nombreUsuario"),
-            price: element.get("precio").toString(),
-            imageUrl: element.get('imageUrl'),
-            quantity: element.get("cantidad").toString(),
-            orderDate: element.get("ferchaPedido"),
-          ),
-        );
-      }
-    });
+    _orders = [];
+    var ordersSnapshot = await FirebaseFirestore.instance
+        .collection("orders")
+        .where('idusuario', isEqualTo: uid)        
+        .get();
+    for (var element in ordersSnapshot.docs) {
+      _orders.insert(
+        0,
+        OrderModel(
+          idOrden: element.get("idOrden"),
+          idusuario: element.get('idusuario'),
+          idproducto: element.get('idproducto'),
+          nombre: element.get("nombre"),
+          precio: element.get("precio").toString(),
+          imageUrl: element.get('imageUrl'),
+          cantidad: element.get("cantidad").toString(),
+          fechaOrden: element.get("fechaOrden"),
+        ),
+      );
+    }
+
     notifyListeners();
   }
 }

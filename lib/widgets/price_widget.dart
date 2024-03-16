@@ -5,18 +5,18 @@ import 'package:storeapp_flutter/widgets/text_widget.dart';
 class PriceWidget extends StatelessWidget {
   const PriceWidget(
       {super.key,
-      required this.price,
-      required this.salePrice,
+      required this.precio,
+      required this.precioVenta,
       required this.textPrice,
-      required this.isOnSale});
-  final double price, salePrice;
+      required this.esOferta});
+  final double precio, precioVenta;
   final String textPrice;
-  final bool isOnSale;
+  final bool esOferta;
 
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
-    double userPrice = isOnSale ? salePrice : price;
+    double userPrice = esOferta ? precioVenta : precio;
     return FittedBox(
         child: Row(
       mainAxisSize: MainAxisSize.min,
@@ -31,9 +31,9 @@ class PriceWidget extends StatelessWidget {
           width: 5,
         ),
         Visibility(
-          visible: isOnSale ? true : false,
+          visible: esOferta ? true : false,
           child: Text(
-            'S/.${(price * int.parse(textPrice)).toStringAsFixed(2)}',
+            'S/.${(precio * int.parse(textPrice)).toStringAsFixed(2)}',
             style: TextStyle(
               fontSize: 12,
               color: color,

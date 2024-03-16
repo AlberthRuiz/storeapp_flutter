@@ -58,7 +58,7 @@ class OnSalePage extends StatelessWidget {
               padding: EdgeInsets.zero,
               crossAxisCount: 2,
               childAspectRatio:
-                  util.getScreenSize.width / (util.getScreenSize.height * 0.50),
+                  util.getScreenSize.width / (util.getScreenSize.height * 0.55),
               children: List.generate(productsOnSale.length, (index) {
                 return ChangeNotifierProvider.value(
                     value: productsOnSale[index], child: OnSaleWidget());

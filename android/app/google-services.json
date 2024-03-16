@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "24513170045-889n9turq2t3vah3uhblkfmf8hcscaiv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.demo.exportsandchats.exportsandchatsappc2",
+            "certificate_hash": "aabbac22214e40fbf62c4927fc35ed39e146292f"
+          }
+        },
+        {
+          "client_id": "24513170045-cs835rrdgebhsggaod4egjli2aj7kfbp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.demo.exportsandchats.exportsandchatsappc2",
+            "certificate_hash": "af23c96125f2c188353ab2c01ff495c0f11526f1"
+          }
+        },
+        {
           "client_id": "24513170045-oe76meitvkkfpgha36tqm6g81ve3aqff.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -50,6 +66,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "24513170045-n31t3vgm5q5u9nof11g7qee5krh5g30d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.demo.firebase2.firebaseappc2",
+            "certificate_hash": "af23c96125f2c188353ab2c01ff495c0f11526f1"
+          }
+        },
+        {
+          "client_id": "24513170045-naqk8d3kia7595t2pm7kup91iv7osl41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.demo.firebase2.firebaseappc2",
+            "certificate_hash": "aabbac22214e40fbf62c4927fc35ed39e146292f"
+          }
+        },
+        {
           "client_id": "24513170045-oe76meitvkkfpgha36tqm6g81ve3aqff.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -85,6 +117,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "24513170045-je96h9o0p5c8jdntbis4nunhr1e1q5ne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.project.store.storeapp_flutter",
+            "certificate_hash": "aabbac22214e40fbf62c4927fc35ed39e146292f"
+          }
+        },
         {
           "client_id": "24513170045-nbhbr9b2m1l470pdhcr76klvu4rkupsj.apps.googleusercontent.com",
           "client_type": 1,

@@ -24,12 +24,12 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  final _quantityTextController = TextEditingController(text: '1');
+  final _cantidadTextController = TextEditingController(text: '1');
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    _quantityTextController.dispose();
+    _cantidadTextController.dispose();
     super.dispose();
   }
 
@@ -40,14 +40,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
     final cartProvider = Provider.of<CartProvider>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
-    final productId = widget.id;
+    final idproducto = widget.id;
     final productProvider = Provider.of<ProductsProvider>(context);
-    final getCurrProduct = productProvider.findProdById(productId!);
+    final getCurrProduct = productProvider.findProdById(idproducto!);
 
-    double usedPrice = getCurrProduct.isOnSale
-        ? getCurrProduct.salePrice
-        : getCurrProduct.price;
-    double totalPrice = usedPrice * int.parse(_quantityTextController.text);
+    double usedPrice = getCurrProduct.esOferta
+        ? getCurrProduct.precioVenta
+        : getCurrProduct.precio;
+    double precioTotal = usedPrice * int.parse(_cantidadTextController.text);
     bool? isInCart = cartProvider.getCartItems.containsKey(getCurrProduct.id);
 
     bool? isInWishlist =
@@ -57,7 +57,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return PopScope(
       canPop: true,
       onPopInvoked: (didPop) async {
-        viewedProdProvider.addProductToHistory(productId: productId);
+        viewedProdProvider.addProductToHistory(idproducto: idproducto);
       },
       child: Scaffold(
         appBar: AppBar(
@@ -108,7 +108,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           isTitle: true,
                         ),
                         HeartButtonWidget(
-                          productId: getCurrProduct.id,
+                          idproducto: getCurrProduct.id,
                           isInWishlist: isInWishlist,
                         )
                       ],
@@ -137,9 +137,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           width: 10,
                         ),
                         Visibility(
-                          visible: getCurrProduct.isOnSale ? true : false,
+                          visible: getCurrProduct.esOferta ? true : false,
                           child: Text(
-                            'S/.${getCurrProduct.price.toStringAsFixed(2)}',
+                            'S/.${getCurrProduct.precio.toStringAsFixed(2)}',
                             style: TextStyle(
                                 fontSize: 15,
                                 color: color,
@@ -169,14 +169,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      quantityControl(
+                      cantidadControl(
                         fct: () {
-                          if (_quantityTextController.text == '1') {
+                          if (_cantidadTextController.text == '1') {
                             return;
                           } else {
                             setState(() {
-                              _quantityTextController.text =
-                                  (int.parse(_quantityTextController.text) - 1)
+                              _cantidadTextController.text =
+                                  (int.parse(_cantidadTextController.text) - 1)
                                       .toString();
                             });
                           }
@@ -190,7 +190,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       Expanded(
                         flex: 1,
                         child: TextField(
-                          controller: _quantityTextController,
+                          controller: _cantidadTextController,
                           key: const ValueKey("cantidad"),
                           keyboardType: TextInputType.number,
                           maxLines: 1,
@@ -214,11 +214,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       const SizedBox(
                         width: 5,
                       ),
-                      quantityControl(
+                      cantidadControl(
                         fct: () {
                           setState(() {
-                            _quantityTextController.text =
-                                (int.parse(_quantityTextController.text) + 1)
+                            _cantidadTextController.text =
+                                (int.parse(_cantidadTextController.text) + 1)
                                     .toString();
                           });
                         },
@@ -262,14 +262,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     children: [
                                       TextWidget(
                                         text:
-                                            'S/.${totalPrice.toStringAsFixed(2)}/',
+                                            'S/.${precioTotal.toStringAsFixed(2)}/',
                                         color: color,
                                         textSize: 20,
                                         isTitle: true,
                                       ),
                                       TextWidget(
                                         text:
-                                            '${_quantityTextController.text}Kg',
+                                            '${_cantidadTextController.text}Kg',
                                         color: color,
                                         textSize: 16,
                                         isTitle: false,
@@ -302,9 +302,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                             return;
                                           }
                                           await GlobalActions.addToCart(
-                                              productId: getCurrProduct.id,
-                                              quantity: int.parse(
-                                                  _quantityTextController.text),
+                                              idproducto: getCurrProduct.id,
+                                              cantidad: int.parse(
+                                                  _cantidadTextController.text),
                                               context: context);
                                           await cartProvider.fetchCart();
                                         },
@@ -333,7 +333,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  Widget quantityControl(
+  Widget cantidadControl(
       {required Function fct, required IconData icon, required Color color}) {
     return Flexible(
       flex: 2,

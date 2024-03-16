@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               home: Scaffold(
                   body: Center(
-                child: Text('An error occured'),
+                child: Text('Ocurrio un error'),
               )),
             );
           }

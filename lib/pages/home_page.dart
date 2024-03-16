@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Flexible(
                   child: SizedBox(
-                    height: util.getScreenSize.height * 0.22,
+                    height: util.getScreenSize.height * 0.27,
                     child: ListView.builder(
                         itemCount: productsOnSale.length < 10
                             ? productsOnSale.length
